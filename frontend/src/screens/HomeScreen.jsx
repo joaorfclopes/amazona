@@ -14,7 +14,7 @@ export default function HomeScreen() {
     dispatch(listProducts());
   }, [dispatch]);
   return (
-    <div>
+    <>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -28,6 +28,6 @@ export default function HomeScreen() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
