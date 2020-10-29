@@ -7,10 +7,12 @@ export default function ShippingScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress, cartItems } = cart;
 
   if (!userInfo) {
     props.history.push("/signin");
+  } else if (cartItems.length === 0) {
+    props.history.push("/cart");
   }
 
   const dispatch = useDispatch();
