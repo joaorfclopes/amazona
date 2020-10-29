@@ -5,14 +5,13 @@ import { addToCart, removeFromCart } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 
 export default function CartScreen(props) {
-  const dispatch = useDispatch();
   const productId = props.match.params.id;
   const qty = props.location.search
     ? Number(props.location.search.split("=")[1])
     : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -23,8 +22,9 @@ export default function CartScreen(props) {
     dispatch(removeFromCart(id));
     props.history.push("/cart");
   };
+
   const checkoutHandler = () => {
-    props.history.push("signin?redirect=shipping");
+    props.history.push("/signin?redirect=shipping");
   };
   return (
     <div className="row top">
@@ -46,7 +46,7 @@ export default function CartScreen(props) {
                       className="small"
                     ></img>
                   </div>
-                  <div className="mi-30">
+                  <div className="min-30">
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
                   <div>
@@ -65,7 +65,7 @@ export default function CartScreen(props) {
                       ))}
                     </select>
                   </div>
-                  <div>{item.price}€</div>
+                  <div>${item.price}</div>
                   <div>
                     <button
                       type="button"
@@ -85,8 +85,8 @@ export default function CartScreen(props) {
           <ul>
             <li>
               <h2>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items):{" "}
-                {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}€
+                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
+                {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
               </h2>
             </li>
             <li>
