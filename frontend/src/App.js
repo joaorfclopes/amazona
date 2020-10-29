@@ -10,6 +10,7 @@ import SigninScreen from "./screens/SigninScreen";
 import { signout } from "./actions/userActions";
 import { emptyCart } from "./actions/cartActions";
 import RegisterScreen from "./screens/RegisterScreen";
+import ShippingScreen from "./screens/ShippingScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
             </div>
           </header>
           <main>
+            <Route path="/shipping" component={ShippingScreen} />
             <Route path="/register" component={RegisterScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
