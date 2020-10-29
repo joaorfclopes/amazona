@@ -9,8 +9,9 @@ import ProductScreen from "./screens/ProductScreen";
 import SigninScreen from "./screens/SigninScreen";
 import { signout } from "./actions/userActions";
 import { emptyCart } from "./actions/cartActions";
+import RegisterScreen from "./screens/RegisterScreen";
 
-function App(props) {
+function App() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -20,6 +21,7 @@ function App(props) {
   const signoutHandler = () => {
     dispatch(signout());
     dispatch(emptyCart());
+    window.location.href = "/";
   };
 
   return (
@@ -58,6 +60,7 @@ function App(props) {
             </div>
           </header>
           <main>
+            <Route path="/register" component={RegisterScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/product/:id" component={ProductScreen} />
