@@ -1,14 +1,26 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import SigninScreen from "./screens/SigninScreen";
+import { signout } from "./actions/userActions";
+import { emptyCart } from "./actions/cartActions";
 
-function App() {
+function App(props) {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const signoutHandler = () => {
+    dispatch(signout());
+    dispatch(emptyCart());
+  };
 
   return (
     <BrowserRouter>
@@ -27,7 +39,22 @@ function App() {
                   <span className="badge">{cartItems.length}</span>
                 )}
               </Link>
-              <Link to="/signin">Sign In</Link>
+              {userInfo ? (
+                <div className="dropdown">
+                  <Link to="/#">
+                    {userInfo.name} <FontAwesomeIcon icon={faCaretDown} />
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/" onClick={signoutHandler}>
+                        Sign Out
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <Link to="/signin">Sign In</Link>
+              )}
             </div>
           </header>
           <main>
