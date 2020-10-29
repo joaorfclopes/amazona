@@ -2,7 +2,7 @@ import Axios from "axios";
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
-  CART_REMOVE_ITEMS,
+  CART_EMPTY,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
 } from "../constants/cartConstants";
@@ -33,7 +33,7 @@ export const removeFromCart = (productId) => async (dispatch, getState) => {
 
 export const emptyCart = () => async (dispatch, getState) => {
   dispatch({
-    type: CART_REMOVE_ITEMS,
+    type: CART_EMPTY,
   });
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
