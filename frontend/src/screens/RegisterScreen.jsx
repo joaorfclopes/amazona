@@ -22,7 +22,8 @@ export default function RegisterScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords don't match");
+      const passwordError = document.getElementById("passwordError");
+      passwordError.style.display = "block";
     } else {
       dispatch(register(name, email, password));
     }
@@ -33,6 +34,7 @@ export default function RegisterScreen(props) {
       props.history.push(redirect);
     }
   }, [userInfo, props, redirect]);
+
   return (
     <>
       <form className="form" onSubmit={submitHandler}>
@@ -41,6 +43,11 @@ export default function RegisterScreen(props) {
         </div>
         {loading && <LoadingBox />}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
+        {
+          <div id="passwordError" style={{ display: "none" }}>
+            <MessageBox variant="danger">Passwords don't match</MessageBox>
+          </div>
+        }
         <div>
           <label htmlFor="name">Name</label>
           <input
