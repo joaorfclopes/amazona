@@ -33,3 +33,13 @@ export const isAuth = (req, res, next) => {
     res.status(401).send({ message: "No token" });
   }
 };
+
+export const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const output = `${day}.${month}.${year}, ${hour}:${minutes}`;
+  return output;
+};

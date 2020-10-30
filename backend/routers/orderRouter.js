@@ -1,7 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
-import { isAuth } from "../utils.js";
+import { formatDate, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
 
@@ -54,7 +54,7 @@ orderRouter.put(
     const order = await Order.findById(req.params.id);
     if (order) {
       order.isPaid = true;
-      order.paidAt = Date.now();
+      order.paidAt = formatDate(new Date());
       order.paymentResult = {
         id: req.body.id,
         status: req.body.status,
