@@ -13,21 +13,23 @@ export default function OrderScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { loading, order, error } = orderDetails;
+
   if (!userInfo) {
     props.history.push("/signin");
   }
 
-  const orderDetails = useSelector((state) => state.orderDetails);
-  const { loading, order, error } = orderDetails;
-
   useEffect(() => {
     dispatch(detailsOrder(orderId));
-  }, [dispatch, orderId]);
+  }, [dispatch, orderId, userInfo]);
 
   return loading ? (
     <LoadingBox />
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
+  ) : !userInfo.isAdmin && userInfo._id !== order.user ? (
+    <MessageBox variant="danger">Order from another customer</MessageBox>
   ) : (
     <>
       <h1>Order {order._id}</h1>
