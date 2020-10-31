@@ -43,11 +43,9 @@ export default function RegisterScreen(props) {
         </div>
         {loading && <LoadingBox />}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
-        {
-          <div id="passwordError" style={{ display: "none" }}>
-            <MessageBox variant="danger">Passwords don't match</MessageBox>
-          </div>
-        }
+        <div id="passwordError" style={{ display: "none" }}>
+          <MessageBox variant="danger">Passwords don't match</MessageBox>
+        </div>
         <div>
           <label htmlFor="name">Name</label>
           <input

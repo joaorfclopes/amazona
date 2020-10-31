@@ -16,6 +16,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout());
     dispatch(emptyCart());
-    window.location.href = "/";
   };
 
   return (
@@ -72,12 +72,12 @@ function App() {
             </div>
           </header>
           <main>
-            <Route path="/profile" component={ProfileScreen} />
-            <Route path="/orderhistory" component={OrderHistoryScreen} />
-            <Route path="/order/:id" component={OrderScreen} />
-            <Route path="/placeorder" component={PlaceOrderScreen} />
-            <Route path="/payment" component={PaymentScreen} />
-            <Route path="/shipping" component={ShippingScreen} />
+            <PrivateRoute path="/profile" component={ProfileScreen} />
+            <PrivateRoute path="/orderhistory" component={OrderHistoryScreen} />
+            <PrivateRoute path="/order/:id" component={OrderScreen} />
+            <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
+            <PrivateRoute path="/payment" component={PaymentScreen} />
+            <PrivateRoute path="/shipping" component={ShippingScreen} />
             <Route path="/register" component={RegisterScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
