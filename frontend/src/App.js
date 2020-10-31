@@ -54,10 +54,10 @@ function App() {
                   </Link>
                   <ul className="dropdown-content">
                     <li>
-                      <Link to="/profile">User Profile</Link>
+                      <Link to="/profile">Profile</Link>
                     </li>
                     <li>
-                      <Link to="/orderhistory">Order History</Link>
+                      <Link to="/orderhistory">Orders</Link>
                     </li>
                     <li>
                       <Link to="/" onClick={signoutHandler}>
