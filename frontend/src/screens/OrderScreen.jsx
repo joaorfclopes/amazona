@@ -7,6 +7,7 @@ import { detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import { formatDateDayHour } from "../utils";
 
 export default function OrderScreen(props) {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ export default function OrderScreen(props) {
                 </p>
                 {order.isPaid ? (
                   <MessageBox variant="success">
-                    Paid at {order.paidAt}
+                    Paid at {formatDateDayHour(order.paidAt)}
                   </MessageBox>
                 ) : (
                   <MessageBox variant="danger">Not paid</MessageBox>
@@ -127,7 +128,8 @@ export default function OrderScreen(props) {
                           </Link>
                         </div>
                         <div>
-                          {item.qty} x {item.price}€ = {item.qty * item.price}€
+                          {item.qty} x {item.price.toFixed(2)}€ ={" "}
+                          {(item.qty * item.price).toFixed(2)}€
                         </div>
                       </div>
                     </li>

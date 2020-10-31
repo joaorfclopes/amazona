@@ -39,9 +39,9 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     isPaid: { type: Boolean, default: false },
-    paidAt: { type: String },
+    paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
-    deliveredAt: { type: String },
+    deliveredAt: { type: Date },
   },
   {
     timestamps: true,
