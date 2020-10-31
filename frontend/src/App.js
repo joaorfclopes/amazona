@@ -47,6 +47,27 @@ function App() {
                   <span className="badge">{cartItems.length}</span>
                 )}
               </Link>
+              {userInfo && userInfo.isAdmin && (
+                <div className="dropdown">
+                  <Link to="#admin">
+                    Admin <FontAwesomeIcon icon={faCaretDown} />
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+                    <li>
+                      <Link to="/productlist">Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist">Orders</Link>
+                    </li>
+                    <li>
+                      <Link to="/userlist">Dashboard</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
               {userInfo ? (
                 <div className="dropdown">
                   <Link to="/#">
