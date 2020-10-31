@@ -65,8 +65,6 @@ export default function OrderScreen(props) {
     <LoadingBox />
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
-  ) : !userInfo.isAdmin && userInfo._id !== order.user ? (
-    <MessageBox variant="danger">Order from another customer</MessageBox>
   ) : (
     <>
       <h1>Order {order._id}</h1>
