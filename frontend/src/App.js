@@ -15,6 +15,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function App() {
                   </Link>
                   <ul className="dropdown-content">
                     <li>
+                      <Link to="/profile">User Profile</Link>
+                    </li>
+                    <li>
                       <Link to="/orderhistory">Order History</Link>
                     </li>
                     <li>
@@ -68,6 +72,7 @@ function App() {
             </div>
           </header>
           <main>
+            <Route path="/profile" component={ProfileScreen} />
             <Route path="/orderhistory" component={OrderHistoryScreen} />
             <Route path="/order/:id" component={OrderScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
