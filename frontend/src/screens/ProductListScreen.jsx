@@ -1,23 +1,45 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../actions/productActions";
+import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 
 export default function ProductListScreen(props) {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    success: successCreate,
+    product: createdProduct,
+    error: errorCreate,
+  } = productCreate;
 
   useEffect(() => {
     dispatch(listProducts());
-  }, [dispatch]);
+    if (successCreate) {
+      dispatch({ type: PRODUCT_CREATE_RESET });
+      props.history.push(`/prodduct/${createdProduct._id}/edit`);
+    }
+  }, [dispatch, successCreate, props, createdProduct]);
 
+  const createHandler = () => {
+    dispatch(createProduct());
+  };
   const deleteHandler = () => {};
   return (
     <>
-      <h1>Products</h1>
+      <div className="row">
+        <h1>Products</h1>
+        <button type="button" className="primary" onClick={createHandler}>
+          Create Product
+        </button>
+      </div>
+      {loadingCreate && <LoadingBox />}
+      {errorCreate && <MessageBox variant="error">{errorCreate}</MessageBox>}
       {loading ? (
         <LoadingBox />
       ) : error ? (

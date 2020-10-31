@@ -105,7 +105,7 @@ function App() {
             <Route path="/register" component={RegisterScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
-            <Route path="/product/:id" component={ProductScreen} />
+            <Route path="/product/:id" component={ProductScreen} exact />
             <Route path="/" component={HomeScreen} exact />
           </main>
           <footer className="row center">All right reserved</footer>
