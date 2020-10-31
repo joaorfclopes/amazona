@@ -19,6 +19,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import ProductListScreen from "./screens/ProductListScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -95,6 +96,11 @@ function App() {
             </div>
           </header>
           <main>
+            <AdminRoute
+              path="/product/:id/edit"
+              component={ProductEditScreen}
+              exact
+            />
             <AdminRoute path="/productlist" component={ProductListScreen} />
             <PrivateRoute path="/profile" component={ProfileScreen} />
             <PrivateRoute path="/orderhistory" component={OrderHistoryScreen} />

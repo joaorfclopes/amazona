@@ -22,7 +22,7 @@ export default function ProductListScreen(props) {
     dispatch(listProducts());
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
-      props.history.push(`/prodduct/${createdProduct._id}/edit`);
+      props.history.push(`/product/${createdProduct._id}/edit`);
     }
   }, [dispatch, successCreate, props, createdProduct]);
 
