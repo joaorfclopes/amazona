@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsProduct, updateProduct } from "../actions/productActions";
@@ -10,6 +11,8 @@ export default function ProductEditScreen(props) {
 
   const productId = props.match.params.id;
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, product, error } = productDetails;
   const productUpdate = useSelector((state) => state.productUpdate);
@@ -26,6 +29,8 @@ export default function ProductEditScreen(props) {
   const [countInStock, setCountInStock] = useState("");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [errorUpload, setErrorUpload] = useState("");
 
   useEffect(() => {
     if (successUpdate) {
@@ -61,6 +66,27 @@ export default function ProductEditScreen(props) {
       })
     );
   };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    setLoadingUpload(true);
+    try {
+      const { data } = await Axios.post("/api/uploads", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      setImage(data);
+      setLoadingUpload(false);
+    } catch (error) {
+      setErrorUpload(error.message);
+      setLoadingUpload(false);
+    }
+  };
+
   return (
     <>
       <form className="form" onSubmit={submitHandler}>
@@ -104,6 +130,19 @@ export default function ProductEditScreen(props) {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               />
+            </div>
+            <div>
+              <label htmlFor="imageFile">Image File</label>
+              <input
+                type="file"
+                id="imageFile"
+                label="Choose image"
+                onChange={uploadFileHandler}
+              />
+              {loadingUpload && <LoadingBox />}
+              {errorUpload && (
+                <MessageBox variant="danger">{errorUpload}</MessageBox>
+              )}
             </div>
             <div>
               <label htmlFor="category">Category</label>
