@@ -91,7 +91,7 @@ export default function ProductEditScreen(props) {
     <>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Edit Product {productId}</h1>
+          <h1>Edit {name}</h1>
         </div>
         {loadingUpdate && <LoadingBox />}
         {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
@@ -122,17 +122,8 @@ export default function ProductEditScreen(props) {
               />
             </div>
             <div>
-              <label htmlFor="image">Image</label>
-              <input
-                type="text"
-                id="image"
-                placeholder="Enter image"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              />
-            </div>
-            <div>
               <label htmlFor="imageFile">Image File</label>
+              <img className="preview" src={image} alt="imagePreview" />
               <input
                 type="file"
                 id="imageFile"

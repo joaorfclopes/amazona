@@ -144,10 +144,14 @@ img.small {
 }
 img.medium {
   max-width: 29rem;
+  max-height: 35rem;
   width: 100%;
 }
 img.large {
   width: 100%;
+}
+img.preview {
+  width: 250px;
 }
 
 /* Card */
