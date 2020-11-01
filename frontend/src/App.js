@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -20,6 +20,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
+import NotFoundScreen from "./screens/NotFoundScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,17 +58,13 @@ function App() {
                   </Link>
                   <ul className="dropdown-content">
                     <li>
-                      <Link to="/dashboard">Dashboard</Link>
-                    </li>
-                    <li>
                       <Link to="/productlist">Products</Link>
                     </li>
+                    {/*
                     <li>
                       <Link to="/orderlist">Orders</Link>
                     </li>
-                    <li>
-                      <Link to="/userlist">Dashboard</Link>
-                    </li>
+                     */}
                   </ul>
                 </div>
               )}
@@ -96,23 +93,29 @@ function App() {
             </div>
           </header>
           <main>
-            <AdminRoute
-              path="/product/:id/edit"
-              component={ProductEditScreen}
-              exact
-            />
-            <AdminRoute path="/productlist" component={ProductListScreen} />
-            <PrivateRoute path="/profile" component={ProfileScreen} />
-            <PrivateRoute path="/orderhistory" component={OrderHistoryScreen} />
-            <PrivateRoute path="/order/:id" component={OrderScreen} />
-            <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
-            <PrivateRoute path="/payment" component={PaymentScreen} />
-            <PrivateRoute path="/shipping" component={ShippingScreen} />
-            <Route path="/register" component={RegisterScreen} />
-            <Route path="/signin" component={SigninScreen} />
-            <Route path="/cart/:id?" component={CartScreen} />
-            <Route path="/product/:id" component={ProductScreen} exact />
-            <Route path="/" component={HomeScreen} exact />
+            <Switch>
+              <AdminRoute
+                path="/product/:id/edit"
+                component={ProductEditScreen}
+                exact
+              />
+              <AdminRoute path="/productlist" component={ProductListScreen} />
+              <PrivateRoute path="/profile" component={ProfileScreen} />
+              <PrivateRoute
+                path="/orderhistory"
+                component={OrderHistoryScreen}
+              />
+              <PrivateRoute path="/order/:id" component={OrderScreen} />
+              <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
+              <PrivateRoute path="/payment" component={PaymentScreen} />
+              <PrivateRoute path="/shipping" component={ShippingScreen} />
+              <Route path="/register" component={RegisterScreen} />
+              <Route path="/signin" component={SigninScreen} />
+              <Route path="/cart/:id?" component={CartScreen} />
+              <Route path="/product/:id" component={ProductScreen} exact />
+              <Route path="/" component={HomeScreen} exact />
+              <Route component={NotFoundScreen} />
+            </Switch>
           </main>
           <footer className="row center">All right reserved</footer>
         </div>
