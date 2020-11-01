@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, listProducts } from "../actions/productActions";
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_DELETE_RESET,
+} from "../constants/productConstants";
 
 export default function ProductListScreen(props) {
   const dispatch = useDispatch();
@@ -17,19 +24,31 @@ export default function ProductListScreen(props) {
     product: createdProduct,
     error: errorCreate,
   } = productCreate;
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = productDelete;
 
   useEffect(() => {
-    dispatch(listProducts());
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       props.history.push(`/product/${createdProduct._id}/edit`);
     }
-  }, [dispatch, successCreate, props, createdProduct]);
+    if (successDelete) {
+      dispatch({ type: PRODUCT_DELETE_RESET });
+    }
+    dispatch(listProducts());
+  }, [dispatch, successCreate, props, createdProduct, successDelete]);
 
   const createHandler = () => {
     dispatch(createProduct());
   };
-  const deleteHandler = () => {};
+  const deleteHandler = (product) => {
+    if (window.confirm(`Delete ${product.name}?`))
+      dispatch(deleteProduct(product._id));
+  };
   return (
     <>
       <div className="row">
@@ -38,6 +57,8 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
+      {loadingDelete && <LoadingBox />}
+      {errorDelete && <MessageBox variant="error">{errorDelete}</MessageBox>}
       {loadingCreate && <LoadingBox />}
       {errorCreate && <MessageBox variant="error">{errorCreate}</MessageBox>}
       {loading ? (
@@ -61,7 +82,7 @@ export default function ProductListScreen(props) {
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
-                <td>{product.price.toFixed(2)}€</td>
+                <td>{product.price ? `${product.price.toFixed(2)}€` : ""}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td>
