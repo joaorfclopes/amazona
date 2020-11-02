@@ -115,6 +115,7 @@ export default function ProductEditScreen(props) {
               <label htmlFor="price">Price</label>
               <input
                 type="number"
+                step="0.01"
                 id="price"
                 placeholder="Enter price"
                 value={price}
