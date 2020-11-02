@@ -21,6 +21,7 @@ import AdminRoute from "./components/AdminRoute";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,11 +61,9 @@ function App() {
                     <li>
                       <Link to="/productlist">Products</Link>
                     </li>
-                    {/*
                     <li>
                       <Link to="/orderlist">Orders</Link>
                     </li>
-                     */}
                   </ul>
                 </div>
               )}
@@ -94,6 +93,7 @@ function App() {
           </header>
           <main>
             <Switch>
+              <AdminRoute path="/orderlist" component={OrderListScreen} />
               <AdminRoute
                 path="/product/:id/edit"
                 component={ProductEditScreen}

@@ -126,8 +126,12 @@ export default function OrderScreen(props) {
                           </Link>
                         </div>
                         <div>
-                          {item.qty} x {item.price.toFixed(2)}€ ={" "}
-                          {(item.qty * item.price).toFixed(2)}€
+                          {item.qty} x{" "}
+                          {item.price ? item.price.toFixed(2) : item.price}€ ={" "}
+                          {item.qty * item.price
+                            ? (item.qty * item.price).toFixed(2)
+                            : item.qty * item.price}
+                          €
                         </div>
                       </div>
                     </li>
@@ -146,19 +150,34 @@ export default function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>{order.itemsPrice.toFixed(2)}€</div>
+                  <div>
+                    {order.itemsPrice
+                      ? order.itemsPrice.toFixed(2)
+                      : order.itemsPrice}
+                    €
+                  </div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>{order.shippingPrice.toFixed(2)}€</div>
+                  <div>
+                    {order.shippingPrice
+                      ? order.shippingPrice.toFixed(2)
+                      : order.shippingPrice}
+                    €
+                  </div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>{order.taxPrice.toFixed(2)}€</div>
+                  <div>
+                    {order.taxPrice
+                      ? order.taxPrice.toFixed(2)
+                      : order.taxPrice}
+                    €
+                  </div>
                 </div>
               </li>
               <li>
@@ -167,7 +186,12 @@ export default function OrderScreen(props) {
                     <strong>Order Total</strong>
                   </div>
                   <div>
-                    <strong>{order.totalPrice.toFixed(2)}€</strong>
+                    <strong>
+                      {order.totalPrice
+                        ? order.totalPrice.toFixed(2)
+                        : order.totalPrice}
+                      €
+                    </strong>
                   </div>
                 </div>
               </li>

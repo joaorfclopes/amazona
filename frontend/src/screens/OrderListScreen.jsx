@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listOrder } from "../actions/orderActions";
+import { listOrders } from "../actions/orderActions";
 import { formatDateDay } from "../utils";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
-export default function OrderHistoryScreen(props) {
+export default function OrderListScreen(props) {
   const dispatch = useDispatch();
-  const orderList = useSelector((state) => state.orderList);
-  const { loading, orders, error } = orderList;
+  const orderAdminList = useSelector((state) => state.orderAdminList);
+  const { loading, orders, error } = orderAdminList;
 
   useEffect(() => {
-    dispatch(listOrder());
+    dispatch(listOrders());
   }, [dispatch]);
+
+  const deleteHandler = (order) => {};
 
   return (
     <>
-      <h1>Order History</h1>
+      <h1>Orders</h1>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -26,6 +28,7 @@ export default function OrderHistoryScreen(props) {
           <thead>
             <tr>
               <th>ID</th>
+              <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>
               <th>PAID</th>
@@ -37,6 +40,7 @@ export default function OrderHistoryScreen(props) {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
+                <td>{order.user.name}</td>
                 <td>{formatDateDay(order.createdAt)}</td>
                 <td>
                   {order.totalPrice
@@ -57,6 +61,13 @@ export default function OrderHistoryScreen(props) {
                     }}
                   >
                     Details
+                  </button>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => deleteHandler(order)}
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>

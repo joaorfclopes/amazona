@@ -37,7 +37,7 @@ export default function ProductEditScreen(props) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       props.history.push("/productlist");
     }
-    if (!product || product._id !== productId || successUpdate) {
+    if (!product || product._id !== productId) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));
     } else {
@@ -169,7 +169,7 @@ export default function ProductEditScreen(props) {
               />
             </div>
             <div>
-              <label htmlFor="description">Descriptiom</label>
+              <label htmlFor="description">Description</label>
               <textarea
                 type="text"
                 rows="3"

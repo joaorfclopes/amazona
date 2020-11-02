@@ -14,7 +14,9 @@ export default function Product(props) {
           <h2>{product.name}</h2>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <div className="price">{product.price.toFixed(2)}€</div>
+        <div className="price">
+          {product.price ? product.price.toFixed(2) : product.price}€
+        </div>
       </div>
     </div>
   );
