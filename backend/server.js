@@ -2,10 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
-import productRouter from "./routers/productRouter.js";
-import userRouter from "./routers/userRouter.js";
-import orderRouter from "./routers/orderRouter.js";
-import uploadRouter from "./routers/uploadRouter.js";
+import userRoute from "./routes/userRoute.js";
+import productRoute from "./routes/productRoute.js";
+import orderRoute from "./routes/orderRoute.js";
+import uploadRoute from "./routes/uploadRoute.js";
 
 dotenv.config();
 
@@ -20,16 +20,17 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
   useCreateIndex: true,
 });
 
-app.use("/api/users", userRouter);
-app.use("/api/products", productRouter);
-app.use("/api/orders", orderRouter);
-app.use("/api/uploads", uploadRouter);
+app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/uploads", uploadRoute);
 
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
 
 const __dirname = path.resolve();
+
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.use(express.static(path.join(__dirname, "/frontend/build")));
