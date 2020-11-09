@@ -1,18 +1,22 @@
-import moment from "moment/min/moment-with-locales";
-
 export const formatDateDayHour = (date) => {
-  const dateDay = moment(date).locale("pt").format("L");
-  const dateHour = moment(date).locale("pt").format("LT");
-  const finalDate = `${dateDay}, ${dateHour}`;
-  return finalDate;
+  const day = date.substring(8, 10);
+  const month = date.substring(5, 7);
+  const year = date.substring(0, 4);
+  const hour = date.substring(11, 16);
+  const result = `${day}.${month}.${year}, ${hour}`;
+  return result;
 };
 
 export const formatDateDay = (date) => {
-  const dateDay = moment(date).locale("pt").format("L");
-  return dateDay;
+  const day = date.substring(8, 10);
+  const month = date.substring(5, 7);
+  const year = date.substring(0, 4);
+  const result = `${day}.${month}.${year}`;
+  return result;
 };
 
 export const formatDateHour = (date) => {
-  const dateHour = moment(date).locale("pt").format("LT");
-  return dateHour;
+  const hour = date.substring(11, 16);
+  const result = `${hour}`;
+  return result;
 };
