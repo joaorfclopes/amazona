@@ -22,6 +22,7 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import { formatName } from "./utils";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,7 +71,8 @@ function App() {
               {userInfo ? (
                 <div className="dropdown">
                   <Link to="/#">
-                    {userInfo.name} <FontAwesomeIcon icon={faCaretDown} />
+                    {formatName(userInfo.name)}{" "}
+                    <FontAwesomeIcon icon={faCaretDown} />
                   </Link>
                   <ul className="dropdown-content">
                     <li>
