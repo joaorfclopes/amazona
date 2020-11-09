@@ -35,6 +35,7 @@ export default function ProductListScreen(props) {
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       props.history.push(`/product/${createdProduct._id}/edit`);
+      dispatch(listProducts());
     }
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
