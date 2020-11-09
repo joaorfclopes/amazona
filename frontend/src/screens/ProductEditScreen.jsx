@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { detailsProduct, updateProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
+import {
+  PRODUCT_CREATE_RESET,
+  PRODUCT_UPDATE_RESET,
+} from "../constants/productConstants";
 
 export default function ProductEditScreen(props) {
   const dispatch = useDispatch();
@@ -34,6 +37,7 @@ export default function ProductEditScreen(props) {
 
   useEffect(() => {
     if (successUpdate) {
+      dispatch({ type: PRODUCT_CREATE_RESET });
       dispatch({ type: PRODUCT_UPDATE_RESET });
       props.history.push("/productlist");
     }
