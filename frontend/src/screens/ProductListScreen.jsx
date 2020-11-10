@@ -32,6 +32,7 @@ export default function ProductListScreen(props) {
   } = productDelete;
 
   useEffect(() => {
+    dispatch(listProducts());
     if (successCreate) {
       dispatch({ type: PRODUCT_CREATE_RESET });
       props.history.push(`/product/${createdProduct._id}/edit`);
@@ -40,7 +41,6 @@ export default function ProductListScreen(props) {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(listProducts());
   }, [dispatch, successCreate, props, createdProduct, successDelete]);
 
   const createHandler = () => {
