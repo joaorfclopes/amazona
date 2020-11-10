@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import User from "../models/userModel.js";
 import { isAdmin, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
@@ -89,14 +90,24 @@ orderRouter.get(
   "/:id",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findOne({
-      _id: req.params.id,
-      user: req.user._id,
-    });
-    if (order) {
-      res.send(order);
+    const user = await User.findById(req.user._id);
+    if (user.isAdmin) {
+      const order = await Order.findById(req.params.id);
+      if (order) {
+        res.send(order);
+      } else {
+        res.status(404).send({ message: "Order not found" });
+      }
     } else {
-      res.status(404).send({ message: "Order not found" });
+      const order = await Order.findOne({
+        _id: req.params.id,
+        user: req.user._id,
+      });
+      if (order) {
+        res.send(order);
+      } else {
+        res.status(404).send({ message: "Order not found" });
+      }
     }
   })
 );
