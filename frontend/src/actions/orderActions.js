@@ -38,6 +38,16 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
+    // eslint-disable-next-line no-unused-vars
+    const { email } = await Axios.post(
+      "/api/email",
+      { order: order, userInfo: userInfo },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,

@@ -82,9 +82,9 @@ function App() {
                       <Link to="/orderhistory">Orders</Link>
                     </li>
                     <li>
-                      <Link to="/" onClick={signoutHandler}>
+                      <a href="/" onClick={signoutHandler}>
                         Sign Out
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>
