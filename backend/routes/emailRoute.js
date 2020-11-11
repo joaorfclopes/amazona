@@ -6,16 +6,16 @@ const orderRouter = express.Router();
 
 orderRouter.post(
   "/",
-  expressAsyncHandler(async (req, res) => {
-    let testAccount = await nodemailer.createTestAccount();
+  expressAsyncHandler((req, res) => {
+    //Turn On less secure app access
     let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
+      service: "gmail",
       auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
+        type: "OAuth2",
+        user: process.env.SENDER_EMAIL_ADDRESS,
+        clientId: process.env.MAILING_SERVICE_CLIENT_ID,
+        clientSecret: process.env.MAILING_SERVICE_CLIENT_SECRET,
+        refreshToken: process.env.MAILING_SERVICE_REFRESH_TOKEN,
       },
     });
 
