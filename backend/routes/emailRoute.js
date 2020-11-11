@@ -22,7 +22,7 @@ orderRouter.post(
     var text = `Hello world ${req.body.userInfo.name}!`;
 
     var mailOptions = {
-      from: '"Joao Lopes" <joaorfclopes@gmail.com>',
+      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
       to: req.body.userInfo.email,
       subject: "Email Example",
       text: text,
