@@ -16,6 +16,7 @@ orderRouter.post(
         clientId: process.env.MAILING_SERVICE_CLIENT_ID,
         clientSecret: process.env.MAILING_SERVICE_CLIENT_SECRET,
         refreshToken: process.env.MAILING_SERVICE_REFRESH_TOKEN,
+        accessToken: process.env.MAILING_SERVICE_ACCESS_TOKEN,
       },
     });
 
