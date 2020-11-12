@@ -41,3 +41,11 @@ export const isAdmin = (req, res, next) => {
     res.status(401).send({ message: "Admin token invalid" });
   }
 };
+
+export const formatDate = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const result = `${day}.${month}.${year}`;
+  return result;
+};

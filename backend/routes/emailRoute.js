@@ -2,6 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
 import { createOrder } from "../templates/createOrder.js";
+import { formatDate } from "../utils.js";
 
 const orderRouter = express.Router();
 
@@ -24,8 +25,12 @@ orderRouter.post(
     var mailOptions = {
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
       to: req.body.userInfo.email,
-      subject: `Order ${req.params.id} placed!`,
-      html: createOrder,
+      subject: "Your order's on its way!",
+      html: createOrder({
+        userName: req.body.userInfo.name,
+        orderId: req.params.id,
+        orderDate: formatDate(new Date()),
+      }),
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
