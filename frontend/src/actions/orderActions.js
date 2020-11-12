@@ -40,7 +40,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     localStorage.removeItem("cartItems");
     // eslint-disable-next-line no-unused-vars
     const { email } = await Axios.post(
-      "/api/email",
+      `/api/email/${data.order._id}/createOrder`,
       { order: order, userInfo: userInfo },
       {
         headers: {

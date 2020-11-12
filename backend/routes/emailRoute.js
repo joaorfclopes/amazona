@@ -1,11 +1,12 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
+import { createOrder } from "../templates/createOrder.js";
 
 const orderRouter = express.Router();
 
 orderRouter.post(
-  "/",
+  "/:id/createOrder",
   expressAsyncHandler((req, res) => {
     //Turn On less secure app access
     let transporter = nodemailer.createTransport({
@@ -20,13 +21,11 @@ orderRouter.post(
       },
     });
 
-    var text = `Hello world ${req.body.userInfo.name}!`;
-
     var mailOptions = {
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
       to: req.body.userInfo.email,
-      subject: "Email Example",
-      text: text,
+      subject: `Order ${req.params.id} placed!`,
+      html: createOrder,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
