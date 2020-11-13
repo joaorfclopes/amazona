@@ -1,79 +1,878 @@
-export const createOrder = ({ userName, orderId, orderDate }) => {
-  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
-    <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>Email</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-      <style type="text/css">
-        a[x-apple-data-detectors] {
-          color: inherit !important;
-        }
-      </style>
-    </head>
-    <body style="margin: 0; padding: 0">
-      <table
-        role="presentation"
-        border="0"
-        cellpadding="0"
-        cellspacing="0"
-        width="100%"
-      >
-        <tr>
-          <td style="padding: 20px 0 30px 0">
-            <table
-              align="center"
-              border="0"
-              cellpadding="0"
-              cellspacing="0"
-              width="600"
-              style="border-collapse: collapse; border: 1px solid #cccccc"
-            >
-              <tr>
-                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px">
-                  <table
-                    border="0"
-                    cellpadding="0"
-                    cellspacing="0"
-                    width="100%"
-                    style="border-collapse: collapse"
-                  >
-                    <tr>
-                      <td
+export const createOrder = ({
+  userInfo: { userName },
+  order: {
+    orderId,
+    orderDate,
+    shippingAddress: { fullName, address, country, postalCode, city },
+    cartItems,
+    totalPrice,
+  },
+}) => {
+  const itemDetails = cartItems.map((item) => {
+    return `<tr>
+    <td>
+      <table width="560" cellpadding="0" cellspacing="0" border="0">
+        <tbody>
+          <tr>
+            <td width="110" valign="top">
+              <a
+                href="https://new-amazona.herokuapp.com/product/${item.product}"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <img
+                  src="${item.image}"
+                  alt="product"
+                  width="110"
+                  border="0"
+                  style="display: block"
+                  class="CToWUd"
+                />
+              </a>
+            </td>
+            <td width="20">&nbsp;</td>
+            <td width="430" valign="top">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                  <tr>
+                    <td align="left">
+                      <span
                         style="
-                          color: #153643;
-                          font-family: Arial, sans-serif;
-                          text-align: center;
+                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          text-transform: uppercase;
+                          letter-spacing: 0.8px;
+                          font-weight: 700;
                         "
                       >
-                        <h1
-                          style="
-                            font-size: 24px;
-                            margin: 0;
-                            text-transform: uppercase;
-                          "
+                        <font
+                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                         >
-                          We've sent it!
-                        </h1>
-                        <p>
-                          Hi ${userName}, your order its on its way and it should
-                          be with you soon
-                        </p>
-                        <p>
-                          Order No.: ${orderId}<br />
-                          Order date: ${orderDate}
-                        </p>
+                          Name:
+                        </font>
+                      </span>
+                      <span
+                        style="
+                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          letter-spacing: 0.6px;
+                        "
+                      >
+                        <font
+                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                        >
+                          ${item.name}
+                        </font>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="6" style="font-size: 6px; line-height: 6px">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left">
+                      <span
+                        style="
+                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          text-transform: uppercase;
+                          letter-spacing: 0.8px;
+                          font-weight: 700;
+                        "
+                      >
+                        <font
+                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                        >
+                          Price:
+                        </font>
+                      </span>
+                      <span
+                        style="
+                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          letter-spacing: 0.6px;
+                        "
+                      >
+                        <font
+                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                        >
+                          ${item.price.toFixed(2)}€
+                        </font>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td height="6" style="font-size: 6px; line-height: 6px">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left">
+                      <span
+                        style="
+                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          text-transform: uppercase;
+                          letter-spacing: 0.8px;
+                          font-weight: 700;
+                        "
+                      >
+                        <font
+                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                        >
+                          Qty:
+                        </font>
+                      </span>
+                      <span
+                        style="
+                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                            sans-serif;
+                          color: #2d2d2d;
+                          font-size: 10px;
+                          line-height: 14px;
+                          letter-spacing: 0.6px;
+                        "
+                      >
+                        <font
+                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                        >
+                          ${item.qty}
+                        </font>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td width="20">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>`;
+  });
+
+  return `<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Email</title>
+    </head>
+    <body style="margin: 0; padding: 0">
+      <div
+        marginheight="0"
+        marginwidth="0"
+        style="min-width: 100%; background-color: #ffffff"
+      >
+        <table
+          width="640"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          bgcolor="#ffffff"
+          align="center"
+          style="table-layout: fixed; margin: 0 auto"
+        >
+          <tbody>
+            <tr>
+              <td height="24" style="font-size: 24px; line-height: 24px">
+                <font
+                  style="
+                    font-size: 1px !important;
+                    line-height: 1px !important;
+                    font-family: Arial;
+                    color: transparent;
+                    max-height: 0;
+                    max-width: 0;
+                    opacity: 0;
+                    overflow: hidden;
+                  "
+                >
+                  It should be with you soon.
+                </font>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table
+          width="640"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          align="center"
+          style="
+            border-collapse: collapse;
+            border-spacing: 0;
+            font-size: 0;
+            table-layout: fixed;
+            margin: 0 auto;
+            background-color: #eeeeee;
+          "
+        >
+          <tbody>
+            <tr>
+              <td>
+                <table
+                  width="640"
+                  height="64"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="background-color: #2d2d2d"
+                >
+                  <tbody>
+                    <tr>
+                      <td width="640" height="64" align="center">
+                        <a
+                          href="https://new-amazona.herokuapp.com/"
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          <img
+                            align="center"
+                            width="150"
+                            src="https://new-amazona-bucket.s3.eu-west-2.amazonaws.com/logo.png"
+                            alt="Amazona"
+                            border="0"
+                            style="display: block"
+                            class="CToWUd"
+                          />
+                        </a>
                       </td>
                     </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table
+                  width="640"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="background-color: #eeeeee"
+                >
+                  <tbody>
+                    <tr>
+                      <td width="20">&nbsp;</td>
+                      <td width="600">
+                        <table
+                          width="600"
+                          cellpadding="0"
+                          cellspacing="0"
+                          border="0"
+                          align="center"
+                        >
+                          <tbody>
+                            <tr>
+                              <td
+                                height="12"
+                                style="font-size: 12px; line-height: 12px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td align="center">
+                                <img
+                                  align="center"
+                                  width="40"
+                                  src="https://ci4.googleusercontent.com/proxy/PI9PQglIQMZVJMeK2iy9W4bpNvntFLYtqiLCb5uCiXxnKRNh3xQ71kefH-LFu5E9C-fKe4IMdliYR9ZxzZDAHaXqKQjMPFnpx47qI3QskX7CN-wcZUa0GC0FnyWv-EYcHQ=s0-d-e1-ft#https://asmktnoteunpd.blob.core.windows.net/content/images/main-icon-order.png"
+                                  border="0"
+                                  style="display: block; margin: 0 auto"
+                                  class="CToWUd"
+                                />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="6"
+                                style="font-size: 6px; line-height: 6px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  text-transform: uppercase;
+                                  font-weight: 700;
+                                  font-size: 16px;
+                                  line-height: 22px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                >
+                                  We’ve sent it!
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="12"
+                                style="font-size: 12px; line-height: 12px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  font-size: 14px;
+                                  line-height: 20px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                >
+                                  Hi ${userName}, your parcel is on its way and it
+                                  should be with you soon!
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="12"
+                                style="font-size: 12px; line-height: 12px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  font-size: 14px;
+                                  line-height: 20px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                >
+                                  Order No.: ${orderId}
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  font-size: 14px;
+                                  line-height: 20px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                >
+                                  Order date: ${orderDate}
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td width="600" border="0">
+                                <table
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  align="center"
+                                  style="background-color: #ffffff"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td width="20">&nbsp;</td>
+                                      <td width="560">
+                                        <table
+                                          width="100%"
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          border="0"
+                                          align="center"
+                                        >
+                                          <tbody>
+                                            <tr>
+                                              <td
+                                                height="24"
+                                                style="
+                                                  font-size: 24px;
+                                                  line-height: 24px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  text-decoration: none;
+                                                  text-transform: uppercase;
+                                                  font-weight: 700;
+                                                  font-size: 16px;
+                                                  line-height: 22px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  Delivery details
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="center"
+                                                style="
+                                                  border-top: solid #d0d0d0 1px;
+                                                  font-size: 1px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="24"
+                                                style="
+                                                  font-size: 24px;
+                                                  line-height: 24px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #767676;
+                                                  font-size: 14px;
+                                                  font-weight: 700;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                  text-transform: uppercase;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  Shipping address
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="4"
+                                                style="
+                                                  font-size: 4px;
+                                                  line-height: 4px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTBook-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  ${fullName}
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTBook-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  ${address}
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTBook-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  ${country}
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTBook-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  ${postalCode} ${city},
+                                                  ${country}
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="24"
+                                                style="
+                                                  font-size: 24px;
+                                                  line-height: 24px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                      <td width="20">&nbsp;</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td width="600" border="0">
+                                <table
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  align="center"
+                                  style="background-color: #ffffff"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td width="20">&nbsp;</td>
+                                      <td width="560">
+                                        <table
+                                          width="100%"
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                          border="0"
+                                          align="center"
+                                        >
+                                          <tbody>
+                                            <tr>
+                                              <td
+                                                height="24"
+                                                style="
+                                                  font-size: 24px;
+                                                  line-height: 24px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  text-transform: uppercase;
+                                                  font-weight: 700;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                  letter-spacing: 0.6px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  ${
+                                                    cartItems.length
+                                                  } item(s) sent
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                style="
+                                                  border-top: solid #d0d0d0 1px;
+                                                  font-size: 1px;
+                                                  line-height: 1px;
+                                                "
+                                                width="100%"
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            ${itemDetails}
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                style="
+                                                  border-top: solid #d0d0d0 1px;
+                                                  font-size: 1px;
+                                                  line-height: 1px;
+                                                "
+                                                width="100%"
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  text-transform: uppercase;
+                                                  font-weight: 700;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  Total: ${totalPrice.toFixed(
+                                                    2
+                                                  )}€
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="24"
+                                                style="
+                                                  font-size: 24px;
+                                                  line-height: 24px;
+                                                "
+                                              >
+                                                &nbsp;
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                      <td width="20">&nbsp;</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  font-size: 12px;
+                                  line-height: 20px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                >
+                                  Thanks,
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                                    sans-serif;
+                                  color: #2d2d2d;
+                                  font-size: 12px;
+                                  line-height: 20px;
+                                  letter-spacing: 0.6px;
+                                  font-weight: 700;
+                                "
+                              >
+                                <font
+                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                >
+                                  Amazona
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td width="20">&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </body>
-  </html>  
-  `;
+  </html>`;
 };

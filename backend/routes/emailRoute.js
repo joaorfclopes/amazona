@@ -27,9 +27,22 @@ orderRouter.post(
       to: req.body.userInfo.email,
       subject: "Your order's on its way!",
       html: createOrder({
-        userName: req.body.userInfo.name,
-        orderId: req.params.id,
-        orderDate: formatDate(new Date()),
+        userInfo: {
+          userName: req.body.userInfo.name,
+        },
+        order: {
+          orderId: req.params.id,
+          orderDate: formatDate(new Date()),
+          shippingAddress: {
+            fullName: req.body.order.shippingAddress.fullName,
+            address: req.body.order.shippingAddress.address,
+            country: req.body.order.shippingAddress.country,
+            postalCode: req.body.order.shippingAddress.postalCode,
+            city: req.body.order.shippingAddress.city,
+          },
+          cartItems: req.body.order.cartItems,
+          totalPrice: req.body.order.totalPrice,
+        },
       }),
     };
 
