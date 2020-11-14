@@ -1,13 +1,13 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
-import { createOrder } from "../templates/createOrder.js";
+import { placedOrder } from "../mailing/placedOrder.js";
 import { formatDate } from "../utils.js";
 
 const orderRouter = express.Router();
 
 orderRouter.post(
-  "/:id/createOrder",
+  "/placedOrder",
   expressAsyncHandler((req, res) => {
     //Turn On less secure app access
     let transporter = nodemailer.createTransport({
@@ -26,13 +26,13 @@ orderRouter.post(
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
       to: req.body.userInfo.email,
       subject: "Your order's on its way!",
-      html: createOrder({
+      html: placedOrder({
         userInfo: {
           userName: req.body.userInfo.name,
         },
         order: {
-          orderId: req.params.id,
-          orderDate: formatDate(new Date()),
+          orderId: req.body.order._id,
+          orderDate: formatDate(req.body.order.createdAt),
           shippingAddress: {
             fullName: req.body.order.shippingAddress.fullName,
             address: req.body.order.shippingAddress.address,
@@ -40,7 +40,7 @@ orderRouter.post(
             postalCode: req.body.order.shippingAddress.postalCode,
             city: req.body.order.shippingAddress.city,
           },
-          cartItems: req.body.order.cartItems,
+          orderItems: req.body.order.orderItems,
           totalPrice: req.body.order.totalPrice,
         },
       }),

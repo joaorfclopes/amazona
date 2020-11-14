@@ -1,14 +1,14 @@
-export const createOrder = ({
+export const placedOrder = ({
   userInfo: { userName },
   order: {
     orderId,
     orderDate,
     shippingAddress: { fullName, address, country, postalCode, city },
-    cartItems,
+    orderItems,
     totalPrice,
   },
 }) => {
-  const itemDetails = cartItems.map((item) => {
+  const itemDetails = orderItems.map((item) => {
     return `<tr>
     <td>
       <table width="560" cellpadding="0" cellspacing="0" border="0">
@@ -690,7 +690,7 @@ export const createOrder = ({
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
                                                   ${
-                                                    cartItems.length
+                                                    orderItems.length
                                                   } item(s) sent
                                                 </font>
                                               </td>

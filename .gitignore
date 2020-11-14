@@ -25,4 +25,4 @@ yarn.lock
 .env
 /uploads/*.jpg
 frontend/debug.log
-backend/templates/*.html
+backend/mailing/templates/*.html

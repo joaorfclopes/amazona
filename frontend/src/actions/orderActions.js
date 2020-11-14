@@ -38,16 +38,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
-    // eslint-disable-next-line no-unused-vars
-    const { email } = await Axios.post(
-      `/api/email/${data.order._id}/createOrder`,
-      { order: order, userInfo: userInfo },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -101,6 +91,16 @@ export const payOrder = (order, paymentResult) => async (
       }
     );
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+    // eslint-disable-next-line no-unused-vars
+    const { email } = await Axios.post(
+      "/api/email/placedOrder",
+      { order: order, userInfo: userInfo },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,

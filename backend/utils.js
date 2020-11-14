@@ -43,9 +43,9 @@ export const isAdmin = (req, res, next) => {
 };
 
 export const formatDate = (date) => {
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
+  const day = date.substring(8, 10);
+  const month = date.substring(5, 7);
+  const year = date.substring(0, 4);
   const result = `${day}.${month}.${year}`;
   return result;
 };
