@@ -16,7 +16,7 @@ export const placedOrder = ({
           <tr>
             <td width="110" valign="top">
               <a
-                href="https://new-amazona.herokuapp.com/product/${item.product}"
+                href="${process.env.HOME_PAGE}/product/${item.product}"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -242,15 +242,15 @@ export const placedOrder = ({
                     <tr>
                       <td width="640" height="64" align="center">
                         <a
-                          href="https://new-amazona.herokuapp.com/"
+                          href="${process.env.HOME_PAGE}"
                           rel="noreferrer"
                           target="_blank"
                         >
                           <img
                             align="center"
                             width="150"
-                            src="https://new-amazona-bucket.s3.eu-west-2.amazonaws.com/logo.png"
-                            alt="Amazona"
+                            src="${process.env.BRAND_LOGO}"
+                            alt="${process.env.BRAND_NAME}"
                             border="0"
                             style="display: block"
                             class="CToWUd"
@@ -849,7 +849,7 @@ export const placedOrder = ({
                                 <font
                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                 >
-                                  Amazona
+                                  ${process.env.BRAND_NAME}
                                 </font>
                               </td>
                             </tr>
