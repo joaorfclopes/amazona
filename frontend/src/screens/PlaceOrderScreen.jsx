@@ -21,11 +21,10 @@ export default function PlaceOrderScreen(props) {
 
   const toPrice = (num) => Number(num.toFixed(2));
   cart.itemsPrice = toPrice(
-    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+    cart.cartItems.reduce((a, c) => a + c.qty * c.finalPrice, 0)
   );
   cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice;
 
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
@@ -84,10 +83,13 @@ export default function PlaceOrderScreen(props) {
                         </div>
                         <div>
                           {item.qty} x{" "}
-                          {item.price ? item.price.toFixed(2) : item.price}€ ={" "}
-                          {item.qty * item.price
-                            ? (item.qty * item.price).toFixed(2)
-                            : item.qty * item.price}
+                          {item.finalPrice
+                            ? item.finalPrice.toFixed(2)
+                            : item.finalPrice}
+                          € ={" "}
+                          {item.qty * item.finalPrice
+                            ? (item.qty * item.finalPrice).toFixed(2)
+                            : item.qty * item.finalPrice}
                           €
                         </div>
                       </div>
@@ -123,14 +125,6 @@ export default function PlaceOrderScreen(props) {
                       ? cart.shippingPrice.toFixed(2)
                       : cart.shippingPrice}
                     €
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>
-                    {cart.taxPrice ? cart.taxPrice.toFixed(2) : cart.taxPrice}€
                   </div>
                 </div>
               </li>

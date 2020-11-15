@@ -65,7 +65,12 @@ export default function CartScreen(props) {
                       ))}
                     </select>
                   </div>
-                  <div>{item.price ? item.price.toFixed(2) : item.price}€</div>
+                  <div>
+                    {item.finalPrice
+                      ? item.finalPrice.toFixed(2)
+                      : item.finalPrice}
+                    €
+                  </div>
                   <div>
                     <button
                       type="button"
@@ -86,11 +91,11 @@ export default function CartScreen(props) {
             <li>
               <h2>
                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :{" "}
-                {cartItems.reduce((a, c) => a + c.price * c.qty, 0)
+                {cartItems.reduce((a, c) => a + c.finalPrice * c.qty, 0)
                   ? cartItems
-                      .reduce((a, c) => a + c.price * c.qty, 0)
+                      .reduce((a, c) => a + c.finalPrice * c.qty, 0)
                       .toFixed(2)
-                  : cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                  : cartItems.reduce((a, c) => a + c.finalPrice * c.qty, 0)}
                 €
               </h2>
             </li>

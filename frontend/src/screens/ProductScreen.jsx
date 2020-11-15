@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -37,14 +36,11 @@ export default function ProductScreen(props) {
                 <h1>{product.name}</h1>
               </li>
               <li>
-                <Rating
-                  rating={product.rating}
-                  numReviews={product.numReviews}
-                />
-              </li>
-              <li>
                 Price:{" "}
-                {product.price ? product.price.toFixed(2) : product.price}€
+                {product.finalPrice
+                  ? product.finalPrice.toFixed(2)
+                  : product.finalPrice}
+                €
               </li>
               <li>
                 Description: <p>{product.description}</p>
@@ -58,7 +54,9 @@ export default function ProductScreen(props) {
                   <div className="row">
                     <div>Price</div>
                     <div className="price">
-                      {product.price ? product.price.toFixed(2) : product.price}
+                      {product.finalPrice
+                        ? product.finalPrice.toFixed(2)
+                        : product.finalPrice}
                       €
                     </div>
                   </div>

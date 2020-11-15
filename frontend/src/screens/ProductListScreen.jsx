@@ -74,7 +74,6 @@ export default function ProductListScreen(props) {
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
-              <th>BRAND</th>
               <th>ACTIONS</th>
             </tr>
           </thead>
@@ -84,14 +83,15 @@ export default function ProductListScreen(props) {
                 <td>{product._id}</td>
                 <td>{product.name}</td>
                 <td>
-                  {product.price
+                  {product.finalPrice
                     ? `${
-                        product.price ? product.price.toFixed(2) : product.price
+                        product.finalPrice
+                          ? product.finalPrice.toFixed(2)
+                          : product.finalPrice
                       }€`
                     : ""}
                 </td>
                 <td>{product.category}</td>
-                <td>{product.brand}</td>
                 <td>
                   <button
                     type="button"

@@ -31,10 +31,11 @@ export default function ProductEditScreen(props) {
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState("");
-  const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState("");
+  const [taxPrice, setTaxPrice] = useState("");
+  const [finalPrice, setFinalPrice] = useState("");
 
   useEffect(() => {
     if (successUpdate) {
@@ -51,8 +52,9 @@ export default function ProductEditScreen(props) {
       setImage(product.image);
       setCategory(product.category);
       setCountInStock(product.countInStock);
-      setBrand(product.brand);
       setDescription(product.description);
+      setTaxPrice(product.taxPrice);
+      setFinalPrice(product.finalPrice);
     }
   }, [dispatch, product, productId, successUpdate, props]);
 
@@ -66,8 +68,9 @@ export default function ProductEditScreen(props) {
         image,
         category,
         countInStock,
-        brand,
         description,
+        taxPrice,
+        finalPrice,
       })
     );
   };
@@ -90,6 +93,12 @@ export default function ProductEditScreen(props) {
       setErrorUpload(error.message);
       setLoadingUpload(false);
     }
+  };
+
+  const setPriceAndTax = (val) => {
+    setPrice(val);
+    setTaxPrice((0.23 * val).toFixed(2));
+    setFinalPrice((parseFloat(val) + parseFloat(0.23 * val)).toFixed(2));
   };
 
   return (
@@ -124,8 +133,14 @@ export default function ProductEditScreen(props) {
                 id="price"
                 placeholder="Enter price"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => setPriceAndTax(e.target.value)}
               />
+              {price && (
+                <>
+                  <div className="danger">IVA: {taxPrice}€</div>
+                  <div>Final Price: {finalPrice}€</div>
+                </>
+              )}
             </div>
             <div>
               <label htmlFor="imageFile">Image File</label>
@@ -151,16 +166,6 @@ export default function ProductEditScreen(props) {
                 placeholder="Enter category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="brand">Brand</label>
-              <input
-                type="text"
-                id="brand"
-                placeholder="Enter brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
               />
             </div>
             <div>

@@ -41,6 +41,8 @@ orderRouter.post(
             city: req.body.order.shippingAddress.city,
           },
           orderItems: req.body.order.orderItems,
+          itemsPrice: req.body.order.itemsPrice,
+          shippingPrice: req.body.order.shippingPrice,
           totalPrice: req.body.order.totalPrice,
         },
       }),

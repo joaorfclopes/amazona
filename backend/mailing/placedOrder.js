@@ -5,6 +5,8 @@ export const placedOrder = ({
     orderDate,
     shippingAddress: { fullName, address, country, postalCode, city },
     orderItems,
+    itemsPrice,
+    shippingPrice,
     totalPrice,
   },
 }) => {
@@ -110,7 +112,7 @@ export const placedOrder = ({
                         <font
                           face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                         >
-                          ${item.price.toFixed(2)}€
+                          ${item.finalPrice.toFixed(2)}€
                         </font>
                       </span>
                     </td>
@@ -753,6 +755,49 @@ export const placedOrder = ({
                                                 "
                                               >
                                                 &nbsp;
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  text-transform: uppercase;
+                                                  font-weight: 700;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  Sub-Total: ${itemsPrice.toFixed(
+                                                    2
+                                                  )}€
+                                                </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                align="left"
+                                                style="
+                                                  font-family: 'FuturaPTHeavy-Reg',
+                                                    Futura, Arial, sans-serif;
+                                                  color: #2d2d2d;
+                                                  text-transform: uppercase;
+                                                  font-weight: 700;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
+                                                "
+                                              >
+                                                <font
+                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                                >
+                                                  Shipping:
+                                                  ${shippingPrice.toFixed(2)}€
+                                                </font>
                                               </td>
                                             </tr>
                                             <tr>

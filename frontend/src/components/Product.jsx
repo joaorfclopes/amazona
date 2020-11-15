@@ -1,5 +1,4 @@
 import React from "react";
-import Rating from "./Rating";
 import { Link } from "react-router-dom";
 
 export default function Product(props) {
@@ -13,9 +12,11 @@ export default function Product(props) {
         <Link to={`/product/${product._id}`}>
           <h2>{product.name}</h2>
         </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
         <div className="price">
-          {product.price ? product.price.toFixed(2) : product.price}€
+          {product.finalPrice
+            ? product.finalPrice.toFixed(2)
+            : product.finalPrice}
+          €
         </div>
       </div>
     </div>

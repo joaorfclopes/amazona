@@ -26,7 +26,9 @@ export default function HomeScreen() {
               (product) =>
                 product.image &&
                 product.image &&
-                product.price && <Product key={product._id} product={product} />
+                product.finalPrice && (
+                  <Product key={product._id} product={product} />
+                )
             )}
           </div>
         </div>
