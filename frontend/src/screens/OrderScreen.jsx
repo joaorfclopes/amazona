@@ -121,9 +121,6 @@ export default function OrderScreen(props) {
             <li>
               <div className="card card-body">
                 <h2>Payment</h2>
-                <p>
-                  <strong>Method: </strong> {order.paymentMethod} <br />
-                </p>
                 {order.isPaid ? (
                   <MessageBox variant="success">
                     Paid at {formatDateDayHour(order.paidAt)}

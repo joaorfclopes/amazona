@@ -15,10 +15,6 @@ export default function PlaceOrderScreen(props) {
   const orderCreate = useSelector((state) => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
 
-  if (!cart.paymentMethod) {
-    props.history.push("/payment");
-  }
-
   const toPrice = (num) => Number(num.toFixed(2));
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.finalPrice, 0)
@@ -51,14 +47,6 @@ export default function PlaceOrderScreen(props) {
                   <strong>Address: </strong> {cart.shippingAddress.address},
                   {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
                   , {cart.shippingAddress.country}
-                </p>
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Payment</h2>
-                <p>
-                  <strong>Method: </strong> {cart.paymentMethod} <br />
                 </p>
               </div>
             </li>

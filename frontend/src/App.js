@@ -11,7 +11,6 @@ import { signout } from "./actions/userActions";
 import { emptyCart } from "./actions/cartActions";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingScreen from "./screens/ShippingScreen";
-import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
@@ -109,7 +108,6 @@ function App() {
               />
               <PrivateRoute path="/order/:id" component={OrderScreen} />
               <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
-              <PrivateRoute path="/payment" component={PaymentScreen} />
               <PrivateRoute path="/shipping" component={ShippingScreen} />
               <Route path="/register" component={RegisterScreen} />
               <Route path="/signin" component={SigninScreen} />
