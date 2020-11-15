@@ -166,6 +166,9 @@ export const placedOrder = ({
         </tbody>
       </table>
     </td>
+  </tr>
+  <tr>
+    <td height="12" style="font-size: 12px; line-height: 12px">&nbsp;</td>
   </tr>`;
   });
 
@@ -689,9 +692,8 @@ export const placedOrder = ({
                                                 <font
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  ${
-                                                    orderItems.length
-                                                  } item(s) sent
+                                                  ${orderItems.length} item(s)
+                                                  sent
                                                 </font>
                                               </td>
                                             </tr>
@@ -730,17 +732,6 @@ export const placedOrder = ({
                                               </td>
                                             </tr>
                                             ${itemDetails}
-                                            <tr>
-                                              <td
-                                                height="12"
-                                                style="
-                                                  font-size: 12px;
-                                                  line-height: 12px;
-                                                "
-                                              >
-                                                &nbsp;
-                                              </td>
-                                            </tr>
                                             <tr>
                                               <td
                                                 style="
