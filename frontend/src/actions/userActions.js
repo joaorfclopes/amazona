@@ -16,6 +16,9 @@ import {
   USER_FORGOT_PASS_REQUEST,
   USER_FORGOT_PASS_SUCCESS,
   USER_FORGOT_PASS_FAIL,
+  USER_RESET_PASS_REQUEST,
+  USER_RESET_PASS_FAIL,
+  USER_RESET_PASS_SUCCESS,
 } from "../constants/userConstants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -122,6 +125,25 @@ export const sendResetPasswordMail = (mail) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_FORGOT_PASS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const resetPassword = (user, userId) => async (dispatch) => {
+  dispatch({ type: USER_RESET_PASS_REQUEST, payload: user });
+  try {
+    const { data } = await Axios.put(
+      `/api/users/resetPassword/${userId}`,
+      user
+    );
+    dispatch({ type: USER_RESET_PASS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_RESET_PASS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

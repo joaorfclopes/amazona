@@ -3,6 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
 import { placedOrder } from "../mailing/placedOrder.js";
 import { isAuth, formatDate } from "../utils.js";
+import User from "../models/userModel.js";
 
 const emailRouter = express.Router();
 
@@ -64,15 +65,32 @@ emailRouter.post(
 
 emailRouter.post(
   "/forgotPassword",
-  expressAsyncHandler((req, res) => {
+  expressAsyncHandler(async (req, res) => {
     if (req.body.email) {
-      const mailOptions = {
-        from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
-        to: req.body.email,
-        subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
-        html: `<h1>Reset Password</h1>`,
-      };
-      sendEmail(res, mailOptions);
+      const user = await User.findOne({ email: req.body.email });
+      try {
+        const mailOptions = {
+          from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+          to: user.email,
+          subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
+          html: `
+          <a
+            href="http://localhost:3000/resetPassword/${user._id}""
+            style="color: #0770cf; text-decoration: underline; word-break: break-all"
+            target="_blank"
+          >
+            <font
+              face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+              style="word-break: break-all"
+            >
+            Reset Password
+            </font>
+          </a>`,
+        };
+        sendEmail(res, mailOptions);
+      } catch (error) {
+        res.status(404).send({ message: "User doesn't exist" });
+      }
     } else {
       res.status(404).send({ message: "Error sending reset password link" });
     }

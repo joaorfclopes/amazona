@@ -21,7 +21,7 @@ export default function ForgotPasswordScreen() {
     <>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Reset Password</h1>
+          <h1>Forgot Password?</h1>
         </div>
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         {success && (
@@ -43,23 +43,12 @@ export default function ForgotPasswordScreen() {
           <label />
           {loading && <LoadingBox />}
           {!success ? (
-            !error && (
-              <button className="primary" type="submit">
-                Reset Password
-              </button>
-            )
+            <button className="primary" type="submit">
+              Request Email
+            </button>
           ) : (
             <>
-              <button type="button">Back</button>
-              <label />
               <button type="submit">Resend Email</button>
-            </>
-          )}
-          {error && (
-            <>
-              <button type="button">Back</button>
-              <label />
-              <button type="submit">Try Again</button>
             </>
           )}
         </div>

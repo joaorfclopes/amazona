@@ -99,4 +99,24 @@ userRouter.put(
   })
 );
 
+userRouter.put(
+  "/resetPassword/:id",
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+      if (user) {
+        if (req.body.password) {
+          user.password = bcrypt.hashSync(req.body.password, 8);
+        }
+        const updatedUser = await user.save();
+        res.send(updatedUser);
+      } else {
+        res.status(404).send({ message: "User not found" });
+      }
+    } catch (error) {
+      res.status(404).send({ message: "Error updating user" });
+    }
+  })
+);
+
 export default userRouter;
