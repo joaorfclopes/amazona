@@ -45,7 +45,8 @@ app.get("*", (req, res) =>
   res.send("Server is ready");
 });*/
 
-app.use((err, req, res) => {
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 

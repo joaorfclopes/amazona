@@ -21,6 +21,7 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import { formatName } from "./utils";
 
 function App() {
@@ -111,6 +112,7 @@ function App() {
               <PrivateRoute path="/shipping" component={ShippingScreen} />
               <Route path="/register" component={RegisterScreen} />
               <Route path="/signin" component={SigninScreen} />
+              <Route path="/forgotPassword" component={ForgotPasswordScreen} />
               <Route path="/cart/:id?" component={CartScreen} />
               <Route path="/product/:id" component={ProductScreen} exact />
               <Route path="/" component={HomeScreen} exact />
