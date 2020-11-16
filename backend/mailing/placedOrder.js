@@ -18,7 +18,9 @@ export const placedOrder = ({
           <tr>
             <td width="110" valign="top">
               <a
-                href="${process.env.HOME_PAGE}/product/${item.product}"
+                href="${
+                  process.env.HOME_PAGE || "http://localhost:3000"
+                }/product/${item.product}"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -199,20 +201,6 @@ export const placedOrder = ({
           <tbody>
             <tr>
               <td height="24" style="font-size: 24px; line-height: 24px">
-                <font
-                  style="
-                    font-size: 1px !important;
-                    line-height: 1px !important;
-                    font-family: Arial;
-                    color: transparent;
-                    max-height: 0;
-                    max-width: 0;
-                    opacity: 0;
-                    overflow: hidden;
-                  "
-                >
-                  It should be with you soon.
-                </font>
               </td>
             </tr>
           </tbody>
@@ -247,7 +235,9 @@ export const placedOrder = ({
                     <tr>
                       <td width="640" height="64" align="center">
                         <a
-                          href="${process.env.HOME_PAGE}"
+                          href="${
+                            process.env.HOME_PAGE || "http://localhost:3000"
+                          }"
                           rel="noreferrer"
                           target="_blank"
                         >
@@ -434,7 +424,8 @@ export const placedOrder = ({
                                       >
                                         <a
                                           href="${
-                                            process.env.HOME_PAGE
+                                            process.env.HOME_PAGE ||
+                                            "http://localhost:3000"
                                           }/order/${orderId}"
                                           style="
                                             color: #ffffff;
@@ -956,6 +947,22 @@ export const placedOrder = ({
                     </tr>
                   </tbody>
                 </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table
+          width="640"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          bgcolor="#ffffff"
+          align="center"
+          style="table-layout: fixed; margin: 0 auto"
+        >
+          <tbody>
+            <tr>
+              <td height="24" style="font-size: 24px; line-height: 24px">
               </td>
             </tr>
           </tbody>

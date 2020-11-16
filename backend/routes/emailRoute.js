@@ -75,7 +75,9 @@ emailRouter.post(
           subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
           html: `
           <a
-            href="http://localhost:3000/resetPassword/${user._id}""
+            href="${
+              process.env.HOME_PAGE || "http://localhost:3000"
+            }/resetPassword/${user._id}"
             style="color: #0770cf; text-decoration: underline; word-break: break-all"
             target="_blank"
           >
