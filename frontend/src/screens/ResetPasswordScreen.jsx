@@ -24,9 +24,11 @@ export default function ResetPasswordScreen(props) {
       const passwordError = document.getElementById("passwordError");
       passwordError.style.display = "none";
       dispatch(resetPassword({ password }, userId));
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 3000);
+      if (success) {
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
+      }
     }
   };
 
