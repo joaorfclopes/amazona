@@ -290,28 +290,8 @@ export const placedOrder = ({
                           <tbody>
                             <tr>
                               <td
-                                height="12"
-                                style="font-size: 12px; line-height: 12px"
-                              >
-                                &nbsp;
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center">
-                                <img
-                                  align="center"
-                                  width="40"
-                                  src="https://ci4.googleusercontent.com/proxy/PI9PQglIQMZVJMeK2iy9W4bpNvntFLYtqiLCb5uCiXxnKRNh3xQ71kefH-LFu5E9C-fKe4IMdliYR9ZxzZDAHaXqKQjMPFnpx47qI3QskX7CN-wcZUa0GC0FnyWv-EYcHQ=s0-d-e1-ft#https://asmktnoteunpd.blob.core.windows.net/content/images/main-icon-order.png"
-                                  border="0"
-                                  style="display: block; margin: 0 auto"
-                                  class="CToWUd"
-                                />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                height="6"
-                                style="font-size: 6px; line-height: 6px"
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
                               >
                                 &nbsp;
                               </td>
@@ -390,6 +370,14 @@ export const placedOrder = ({
                                 >
                                   Order No.: ${orderId}
                                 </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="6"
+                                style="font-size: 6px; line-height: 6px"
+                              >
+                                &nbsp;
                               </td>
                             </tr>
                             <tr>

@@ -4,14 +4,17 @@ import { detailsUser, updateUser } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { USER_UPDATE_RESET } from "../constants/userConstants";
+import bcrypt from "bcryptjs";
 
 export default function ProfileScreen() {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changePassword, setChangePassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -36,11 +39,26 @@ export default function ProfileScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      const passwordError = document.getElementById("passwordError");
-      passwordError.style.display = "block";
+    if (newPassword) {
+      if (newPassword !== confirmNewPassword) {
+        const newPasswordError = document.getElementById("newPasswordError");
+        newPasswordError.style.display = "block";
+        const oldPasswordError = document.getElementById("oldPasswordError");
+        oldPasswordError.style.display = "none";
+      } else {
+        if (bcrypt.compareSync(oldPassword, user.password)) {
+          dispatch(
+            updateUser({ userId: user._id, name, email, password: newPassword })
+          );
+        } else {
+          const newPasswordError = document.getElementById("newPasswordError");
+          newPasswordError.style.display = "none";
+          const oldPasswordError = document.getElementById("oldPasswordError");
+          oldPasswordError.style.display = "block";
+        }
+      }
     } else {
-      dispatch(updateUser({ userId: user._id, name, email, password }));
+      dispatch(updateUser({ userId: user._id, name, email }));
     }
   };
 
@@ -65,7 +83,10 @@ export default function ProfileScreen() {
                 Profile updated successfully
               </MessageBox>
             )}
-            <div id="passwordError" style={{ display: "none" }}>
+            <div id="oldPasswordError" style={{ display: "none" }}>
+              <MessageBox variant="danger">Old Password don't match</MessageBox>
+            </div>
+            <div id="newPasswordError" style={{ display: "none" }}>
               <MessageBox variant="danger">Passwords don't match</MessageBox>
             </div>
             <div>
@@ -93,27 +114,50 @@ export default function ProfileScreen() {
               />
             </div>
             <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
+              <button
+                type="button"
+                onClick={() => setChangePassword(!changePassword)}
+              >
+                Change Password
+              </button>
             </div>
-            <div>
-              <label htmlFor="confirmPassword">Confirm password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                placeholder="Confirm password"
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
-              />
-            </div>
+            {changePassword && (
+              <>
+                <div>
+                  <label htmlFor="oldPassword">Old Password</label>
+                  <input
+                    type="password"
+                    id="oldPassword"
+                    placeholder="Enter password"
+                    onChange={(e) => {
+                      setOldPassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="newPassword">New Password</label>
+                  <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter password"
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="confirmPassword">Confirm New Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm password"
+                    onChange={(e) => {
+                      setConfirmNewPassword(e.target.value);
+                    }}
+                  />
+                </div>
+              </>
+            )}
             <div>
               <label />
               <button className="primary" type="submit">
