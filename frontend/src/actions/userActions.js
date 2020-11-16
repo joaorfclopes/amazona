@@ -112,7 +112,9 @@ export const updateUser = (user) => async (dispatch, getState) => {
 export const sendResetPasswordMail = (mail) => async () => {
   try {
     // eslint-disable-next-line no-unused-vars
-    const { email } = await Axios.post("/forgotPassword", { mail });
+    const { email } = await Axios.post("/api/email/forgotPassword", {
+      email: mail,
+    });
   } catch (error) {
     console.log(error);
   }
