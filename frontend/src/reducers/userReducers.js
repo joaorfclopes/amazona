@@ -2,6 +2,9 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_FORGOT_PASS_FAIL,
+  USER_FORGOT_PASS_REQUEST,
+  USER_FORGOT_PASS_SUCCESS,
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -66,6 +69,19 @@ export const userUpdateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case USER_UPDATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const userForgotPasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_FORGOT_PASS_REQUEST:
+      return { loading: true };
+    case USER_FORGOT_PASS_SUCCESS:
+      return { loading: false, success: true };
+    case USER_FORGOT_PASS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

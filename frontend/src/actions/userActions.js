@@ -13,6 +13,9 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_FAIL,
   USER_UPDATE_SUCCESS,
+  USER_FORGOT_PASS_REQUEST,
+  USER_FORGOT_PASS_SUCCESS,
+  USER_FORGOT_PASS_FAIL,
 } from "../constants/userConstants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -109,13 +112,20 @@ export const updateUser = (user) => async (dispatch, getState) => {
   }
 };
 
-export const sendResetPasswordMail = (mail) => async () => {
+export const sendResetPasswordMail = (mail) => async (dispatch) => {
+  dispatch({ type: USER_FORGOT_PASS_REQUEST, payload: mail });
   try {
-    // eslint-disable-next-line no-unused-vars
     const { email } = await Axios.post("/api/email/forgotPassword", {
       email: mail,
     });
+    dispatch({ type: USER_FORGOT_PASS_SUCCESS, payload: email });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: USER_FORGOT_PASS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

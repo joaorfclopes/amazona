@@ -65,13 +65,17 @@ emailRouter.post(
 emailRouter.post(
   "/forgotPassword",
   expressAsyncHandler((req, res) => {
-    const mailOptions = {
-      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
-      to: req.body.email,
-      subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
-      html: `<h1>Reset Password</h1>`,
-    };
-    sendEmail(res, mailOptions);
+    if (req.body.email) {
+      const mailOptions = {
+        from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+        to: req.body.email,
+        subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
+        html: `<h1>Reset Password</h1>`,
+      };
+      sendEmail(res, mailOptions);
+    } else {
+      res.status(404).send({ message: "Error sending reset password link" });
+    }
   })
 );
 
