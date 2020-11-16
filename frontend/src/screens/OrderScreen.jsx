@@ -37,7 +37,7 @@ export default function OrderScreen(props) {
   } = orderDeliver;
 
   if (!userInfo) {
-    props.history.push("/signin");
+    props.history.push(`/signin?redirect=order/${orderId}`);
   }
 
   useEffect(() => {

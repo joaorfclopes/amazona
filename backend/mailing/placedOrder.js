@@ -408,6 +408,70 @@ export const placedOrder = ({
                               </td>
                             </tr>
                             <tr>
+                              <td>
+                                <table
+                                  width="264"
+                                  align="center"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    border-collapse: collapse;
+                                    border-spacing: 0;
+                                    font-size: 0;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        align="center"
+                                        width="264"
+                                        style="
+                                          background-color: #2d2d2d;
+                                          padding-top: 10px;
+                                          padding-bottom: 10px;
+                                        "
+                                      >
+                                        <a
+                                          href="${
+                                            process.env.HOME_PAGE
+                                          }/order/${orderId}"
+                                          style="
+                                            color: #ffffff;
+                                            font-family: 'FuturaPTHeavy-Reg',
+                                              Futura, Arial, sans-serif;
+                                            font-size: 12px;
+                                            line-height: 20px;
+                                            font-weight: 700;
+                                            text-align: center;
+                                            text-decoration: none;
+                                            text-transform: uppercase;
+                                            letter-spacing: 0.6px;
+                                          "
+                                          rel="noreferrer"
+                                          target="_blank"
+                                        >
+                                          <font
+                                            face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                                          >
+                                            Order Details
+                                          </font>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
                               <td width="600" border="0">
                                 <table
                                   width="100%"

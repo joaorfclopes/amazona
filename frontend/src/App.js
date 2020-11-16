@@ -107,9 +107,9 @@ function App() {
                 path="/orderhistory"
                 component={OrderHistoryScreen}
               />
-              <PrivateRoute path="/order/:id" component={OrderScreen} />
               <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
               <PrivateRoute path="/shipping" component={ShippingScreen} />
+              <Route path="/order/:id" component={OrderScreen} />
               <Route path="/register" component={RegisterScreen} />
               <Route path="/signin" component={SigninScreen} />
               <Route path="/forgotPassword" component={ForgotPasswordScreen} />
