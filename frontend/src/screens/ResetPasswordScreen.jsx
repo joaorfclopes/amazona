@@ -14,6 +14,7 @@ export default function ResetPasswordScreen(props) {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [disableTyping, setDisableTyping] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -24,11 +25,11 @@ export default function ResetPasswordScreen(props) {
       const passwordError = document.getElementById("passwordError");
       passwordError.style.display = "none";
       dispatch(resetPassword({ password }, userId));
-      if (success) {
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 3000);
-      }
+      setDisableTyping(true);
+      setTimeout(() => {
+        window.location.href = "/";
+        setDisableTyping(false);
+      }, 1500);
     }
   };
 
@@ -56,6 +57,7 @@ export default function ResetPasswordScreen(props) {
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}
+            disabled={disableTyping}
           />
         </div>
         <div>
@@ -66,6 +68,7 @@ export default function ResetPasswordScreen(props) {
             placeholder="Confirm password"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={disableTyping}
           />
         </div>
         <div>

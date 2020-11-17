@@ -102,8 +102,10 @@ userRouter.put(
 userRouter.put(
   "/resetPassword/:id",
   expressAsyncHandler(async (req, res) => {
+    const params = req.params.id;
+    const id = params.substring(0, params.indexOf(" "));
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findById(id);
       if (user) {
         if (req.body.password) {
           user.password = bcrypt.hashSync(req.body.password, 8);

@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import { isAuth, formatDate } from "../utils.js";
 import { placedOrder } from "../mailing/placedOrder.js";
@@ -74,7 +75,9 @@ emailRouter.post(
           from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
           to: user.email,
           subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
-          html: resetPassword(user._id),
+          html: resetPassword({
+            user: { userId: user._id, email: bcrypt.hashSync(user.email, 8) },
+          }),
         };
         sendEmail(res, mailOptions);
       } catch (error) {
