@@ -181,7 +181,7 @@ export const placedOrder = ({
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Email</title>
+      <title>Place Order Email</title>
     </head>
     <body style="margin: 0; padding: 0">
       <div
