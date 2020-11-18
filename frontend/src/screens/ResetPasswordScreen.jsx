@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
@@ -16,6 +16,12 @@ export default function ResetPasswordScreen(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [disableTyping, setDisableTyping] = useState(false);
 
+  useEffect(() => {
+    if (success) {
+      setDisableTyping(true);
+    }
+  }, [success]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -25,11 +31,6 @@ export default function ResetPasswordScreen(props) {
       const passwordError = document.getElementById("passwordError");
       passwordError.style.display = "none";
       dispatch(resetPassword({ password }, userId));
-      setDisableTyping(true);
-      setTimeout(() => {
-        window.location.href = "/";
-        setDisableTyping(false);
-      }, 1500);
     }
   };
 

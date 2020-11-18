@@ -145,6 +145,11 @@ export const resetPassword = (user, userId) => async (dispatch) => {
       user
     );
     dispatch({ type: USER_RESET_PASS_SUCCESS, payload: data });
+
+    setTimeout(() => {
+      window.close();
+      window.open(`${process.env.HOME_PAGE || "http://localhost:3000"}/signin`);
+    }, 1500);
   } catch (error) {
     dispatch({
       type: USER_RESET_PASS_FAIL,
