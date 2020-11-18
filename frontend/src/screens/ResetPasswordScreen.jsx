@@ -54,6 +54,7 @@ export default function ResetPasswordScreen(props) {
           <input
             type="password"
             id="password"
+            minlength="5"
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}

@@ -139,6 +139,7 @@ export default function ProfileScreen() {
                   <input
                     type="password"
                     id="newPassword"
+                    minlength="5"
                     placeholder="Enter password"
                     onChange={(e) => {
                       setNewPassword(e.target.value);
