@@ -49,6 +49,10 @@ export const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
+    // eslint-disable-next-line no-unused-vars
+    const { sendEmail } = await Axios.post("/api/email/userCreated", {
+      userInfo: data,
+    });
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
@@ -118,10 +122,10 @@ export const updateUser = (user) => async (dispatch, getState) => {
 export const sendResetPasswordMail = (mail) => async (dispatch) => {
   dispatch({ type: USER_FORGOT_PASS_REQUEST, payload: mail });
   try {
-    const { email } = await Axios.post("/api/email/forgotPassword", {
+    const { sendEmail } = await Axios.post("/api/email/forgotPassword", {
       email: mail,
     });
-    dispatch({ type: USER_FORGOT_PASS_SUCCESS, payload: email });
+    dispatch({ type: USER_FORGOT_PASS_SUCCESS, payload: sendEmail });
   } catch (error) {
     dispatch({
       type: USER_FORGOT_PASS_FAIL,

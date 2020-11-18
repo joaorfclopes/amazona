@@ -1,4 +1,4 @@
-export const resetPassword = ({ user: { userId, email } }) => {
+export const resetPassword = ({ userInfo: { userId, email } }) => {
   const resetPasswordLink = `${
     process.env.HOME_PAGE || "http://localhost:3000"
   }/resetPassword/${userId} ${email}`;

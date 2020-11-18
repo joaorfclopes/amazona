@@ -92,7 +92,7 @@ export const payOrder = (order, paymentResult) => async (
     );
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
     // eslint-disable-next-line no-unused-vars
-    const { email } = await Axios.post(
+    const { sendEmail } = await Axios.post(
       "/api/email/placedOrder",
       { order: order, userInfo: userInfo },
       {

@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import { isAuth, formatDate } from "../utils.js";
+import { newUser } from "../mailing/newUser.js";
 import { placedOrder } from "../mailing/placedOrder.js";
 import { resetPassword } from "../mailing/resetPassword.js";
 
@@ -31,6 +32,23 @@ const sendEmail = (res, mailOptions) => {
     }
   });
 };
+
+emailRouter.post(
+  "/userCreated",
+  expressAsyncHandler(async (req, res) => {
+    const mailOptions = {
+      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+      to: req.body.userInfo.email,
+      subject: "Thanks for joining us!",
+      html: newUser({
+        userInfo: {
+          userName: req.body.userInfo.name,
+        },
+      }),
+    };
+    sendEmail(res, mailOptions);
+  })
+);
 
 emailRouter.post(
   "/placedOrder",
@@ -76,7 +94,10 @@ emailRouter.post(
           to: user.email,
           subject: `Your ${process.env.BRAND_NAME} password reset link is ready`,
           html: resetPassword({
-            user: { userId: user._id, email: bcrypt.hashSync(user.email, 8) },
+            userInfo: {
+              userId: user._id,
+              email: bcrypt.hashSync(user.email, 8),
+            },
           }),
         };
         sendEmail(res, mailOptions);
