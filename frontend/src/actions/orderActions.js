@@ -101,6 +101,16 @@ export const payOrder = (order, paymentResult) => async (
         },
       }
     );
+    // eslint-disable-next-line no-unused-vars
+    const { sendEmailAdmin } = await Axios.post(
+      "/api/email/placedOrderAdmin",
+      { order: order, userInfo: userInfo },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
