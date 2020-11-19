@@ -121,7 +121,7 @@ export default function OrderScreen(props) {
       {loadingCancel && <LoadingBox />}
       {errorCancel && <MessageBox variant="danger">{errorCancel}</MessageBox>}
       {order.status === "CANCELED" && (
-        <MessageBox variant="danger">This order was deleted</MessageBox>
+        <MessageBox variant="danger">This order was canceled</MessageBox>
       )}
       <div className="row top">
         <div className="col-2">
