@@ -3,10 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
-import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
+import {
+  deliverOrder,
+  detailsOrder,
+  payOrder,
+  cancelOrder,
+} from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import {
+  ORDER_CANCEL_RESET,
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from "../constants/orderConstants";
@@ -35,6 +41,12 @@ export default function OrderScreen(props) {
     success: successDeliver,
     error: errorDeliver,
   } = orderDeliver;
+  const orderCancel = useSelector((state) => state.orderCancel);
+  const {
+    loading: loadingCancel,
+    success: successCancel,
+    error: errorCancel,
+  } = orderCancel;
 
   if (!userInfo) {
     props.history.push(`/signin?redirect=order/${orderId}`);
@@ -56,10 +68,12 @@ export default function OrderScreen(props) {
       !order ||
       successPay ||
       successDeliver ||
+      successCancel ||
       (order && order._id !== orderId)
     ) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
+      dispatch({ type: ORDER_CANCEL_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {
@@ -78,6 +92,7 @@ export default function OrderScreen(props) {
     sdkReady,
     successPay,
     successDeliver,
+    successCancel,
   ]);
 
   const successPaymentHandler = (paymentResult) => {
@@ -88,6 +103,10 @@ export default function OrderScreen(props) {
     dispatch(deliverOrder(order._id));
   };
 
+  const cancelHandler = () => {
+    dispatch(cancelOrder(order._id));
+  };
+
   return loading ? (
     <LoadingBox />
   ) : error ? (
@@ -95,6 +114,11 @@ export default function OrderScreen(props) {
   ) : (
     <>
       <h1>Order {order._id}</h1>
+      {loadingCancel && <LoadingBox />}
+      {errorCancel && <MessageBox variant="danger">{errorCancel}</MessageBox>}
+      {order.status === "CANCELLED" && (
+        <MessageBox variant="danger">This order was deleted</MessageBox>
+      )}
       <div className="row top">
         <div className="col-2">
           <ul>
@@ -211,7 +235,7 @@ export default function OrderScreen(props) {
                   </div>
                 </div>
               </li>
-              {!order.isPaid && (
+              {!order.isPaid && order.status !== "CANCELLED" && (
                 <li>
                   {!sdkReady ? (
                     <LoadingBox />
@@ -230,18 +254,32 @@ export default function OrderScreen(props) {
                   )}
                 </li>
               )}
-              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              {userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered &&
+                order.status !== "CANCELLED" && (
+                  <li>
+                    {loadingDeliver && <LoadingBox />}
+                    {errorDeliver && (
+                      <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                    )}
+                    <button
+                      type="button"
+                      className="primary block"
+                      onClick={deliverHandler}
+                    >
+                      Deliver Order
+                    </button>
+                  </li>
+                )}
+              {order.status !== "CANCELLED" && !order.isDelivered && (
                 <li>
-                  {loadingDeliver && <LoadingBox />}
-                  {errorDeliver && (
-                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                  )}
                   <button
                     type="button"
-                    className="primary block"
-                    onClick={deliverHandler}
+                    className="block"
+                    onClick={cancelHandler}
                   >
-                    Deliver Order
+                    Cancel Order
                   </button>
                 </li>
               )}

@@ -40,6 +40,7 @@ orderRouter.put(
     if (order) {
       order.isDelivered = true;
       order.deliveredAt = Date.now();
+      order.status = "DELIVERED";
       const updatedOrder = await order.save();
       res.send({ message: "Order delivered", order: updatedOrder });
     } else {
@@ -72,6 +73,7 @@ orderRouter.post(
           shippingPrice: req.body.shippingPrice,
           totalPrice: req.body.totalPrice,
           user: req.user._id,
+          status: req.body.status,
         });
         const createdOrder = await order.save();
         res
@@ -118,6 +120,7 @@ orderRouter.put(
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
+      order.status = "PAID";
       order.paymentResult = {
         id: req.body.id,
         status: req.body.status,
@@ -126,6 +129,21 @@ orderRouter.put(
       };
       const updatedOrder = await order.save();
       res.send({ message: "Order paid", order: updatedOrder });
+    } else {
+      res.status(404).send({ message: "Order not found" });
+    }
+  })
+);
+
+orderRouter.put(
+  "/:id/cancel",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.status = "CANCELLED";
+      const updatedOrder = await order.save();
+      res.send({ message: "Order cancelled", order: updatedOrder });
     } else {
       res.status(404).send({ message: "Order not found" });
     }

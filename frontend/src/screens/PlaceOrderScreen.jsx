@@ -23,7 +23,13 @@ export default function PlaceOrderScreen(props) {
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice;
 
   const placeOrderHandler = () => {
-    dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+    dispatch(
+      createOrder({
+        ...cart,
+        orderItems: cart.cartItems,
+        status: "IN PROGRESS",
+      })
+    );
   };
 
   useEffect(() => {

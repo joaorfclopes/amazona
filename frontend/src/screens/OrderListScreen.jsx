@@ -49,6 +49,7 @@ export default function OrderListScreen(props) {
               <th>TOTAL</th>
               <th>PAID</th>
               <th>DELIVERED</th>
+              <th>STATUS</th>
               <th>ACTIONS</th>
             </tr>
           </thead>
@@ -68,6 +69,7 @@ export default function OrderListScreen(props) {
                 <td>
                   {order.isDelivered ? formatDateDay(order.deliveredAt) : "No"}
                 </td>
+                <td>{order.status}</td>
                 <td>
                   <button
                     type="button"
