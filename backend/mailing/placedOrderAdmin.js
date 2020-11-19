@@ -1,9 +1,9 @@
 export const placedOrderAdmin = ({
+  userInfo: { email, phoneNumber },
   order: {
     orderId,
     orderDate,
     shippingAddress: { fullName, address, country, postalCode, city },
-    userContacts: { email, phoneNumber },
     orderItems,
     itemsPrice,
     shippingPrice,
@@ -332,7 +332,7 @@ export const placedOrderAdmin = ({
                                 >
                                   Hi ${
                                     process.env.BRAND_NAME
-                                  }, your have a new order to deliver!
+                                  }, you have a new order to deliver!
                                 </font>
                               </td>
                             </tr>

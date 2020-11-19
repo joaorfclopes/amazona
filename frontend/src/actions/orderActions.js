@@ -248,6 +248,16 @@ export const cancelOrder = (orderId) => async (dispatch, getState) => {
           },
         }
       );
+      // eslint-disable-next-line no-unused-vars
+      const { sendEmailAdmin } = await Axios.post(
+        "/api/email/cancelOrderAdmin",
+        { order: data.order, userInfo: userInfo },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
     }
   } catch (error) {
     dispatch({

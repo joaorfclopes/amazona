@@ -9,6 +9,7 @@ import { placedOrder } from "../mailing/placedOrder.js";
 import { placedOrderAdmin } from "../mailing/placedOrderAdmin.js";
 import { resetPassword } from "../mailing/resetPassword.js";
 import { cancelOrder } from "../mailing/cancelOrder.js";
+import { cancelOrderAdmin } from "../mailing/cancelOrderAdmin.js";
 
 const emailRouter = express.Router();
 
@@ -86,6 +87,40 @@ emailRouter.post(
 );
 
 emailRouter.post(
+  "/placedOrderAdmin",
+  isAuth,
+  expressAsyncHandler((req, res) => {
+    const mailOptions = {
+      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+      to: process.env.SENDER_EMAIL_ADDRESS,
+      subject: "A new order was placed!",
+      html: placedOrderAdmin({
+        userInfo: {
+          email: req.body.userInfo.email,
+          phoneNumber: req.body.userInfo.phoneNumber,
+        },
+        order: {
+          orderId: req.body.order._id,
+          orderDate: formatDate(req.body.order.createdAt),
+          shippingAddress: {
+            fullName: req.body.order.shippingAddress.fullName,
+            address: req.body.order.shippingAddress.address,
+            country: req.body.order.shippingAddress.country,
+            postalCode: req.body.order.shippingAddress.postalCode,
+            city: req.body.order.shippingAddress.city,
+          },
+          orderItems: req.body.order.orderItems,
+          itemsPrice: req.body.order.itemsPrice,
+          shippingPrice: req.body.order.shippingPrice,
+          totalPrice: req.body.order.totalPrice,
+        },
+      }),
+    };
+    sendEmail(res, mailOptions);
+  })
+);
+
+emailRouter.post(
   "/cancelOrder",
   isAuth,
   expressAsyncHandler((req, res) => {
@@ -112,28 +147,22 @@ emailRouter.post(
 );
 
 emailRouter.post(
-  "/placedOrderAdmin",
+  "/cancelOrderAdmin",
   isAuth,
   expressAsyncHandler((req, res) => {
     const mailOptions = {
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
-      to: process.env.SENDER_EMAIL_ADDRESS,
-      subject: "A new order was placed!",
-      html: placedOrderAdmin({
+      to: req.body.userInfo.email,
+      subject: "Order Canceled!",
+      html: cancelOrderAdmin({
+        userInfo: {
+          userName: req.body.userInfo.name,
+          email: req.body.userInfo.email,
+          phoneNumber: req.body.userInfo.phoneNumber,
+        },
         order: {
           orderId: req.body.order._id,
           orderDate: formatDate(req.body.order.createdAt),
-          shippingAddress: {
-            fullName: req.body.order.shippingAddress.fullName,
-            address: req.body.order.shippingAddress.address,
-            country: req.body.order.shippingAddress.country,
-            postalCode: req.body.order.shippingAddress.postalCode,
-            city: req.body.order.shippingAddress.city,
-          },
-          userContacts: {
-            email: req.body.userInfo.email,
-            phoneNumber: req.body.userInfo.phoneNumber,
-          },
           orderItems: req.body.order.orderItems,
           itemsPrice: req.body.order.itemsPrice,
           shippingPrice: req.body.order.shippingPrice,

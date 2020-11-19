@@ -1,5 +1,5 @@
-export const cancelOrder = ({
-  userInfo: { userName },
+export const cancelOrderAdmin = ({
+  userInfo: { userName, email, phoneNumber },
   order: {
     orderId,
     orderDate,
@@ -11,168 +11,168 @@ export const cancelOrder = ({
 }) => {
   const itemDetails = orderItems.map((item) => {
     return `<tr>
-    <td>
-      <table width="560" cellpadding="0" cellspacing="0" border="0">
-        <tbody>
-          <tr>
-            <td width="110" valign="top">
-              <a
-                href="${
-                  process.env.HOME_PAGE || "http://localhost:3000"
-                }/product/${item.product}"
-                rel="noreferrer"
-                target="_blank"
-              >
-                <img
-                  src="${item.image}"
-                  alt="product"
-                  width="110"
-                  border="0"
-                  style="display: block"
-                  class="CToWUd"
-                />
-              </a>
-            </td>
-            <td width="20">&nbsp;</td>
-            <td width="430" valign="top">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                  <tr>
-                    <td align="left">
-                      <span
-                        style="
-                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          text-transform: uppercase;
-                          letter-spacing: 0.8px;
-                          font-weight: 700;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
-                        >
-                          Name:
-                        </font>
-                      </span>
-                      <span
-                        style="
-                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          letter-spacing: 0.6px;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
-                        >
-                          ${item.name}
-                        </font>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td height="6" style="font-size: 6px; line-height: 6px">
-                      &nbsp;
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="left">
-                      <span
-                        style="
-                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          text-transform: uppercase;
-                          letter-spacing: 0.8px;
-                          font-weight: 700;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
-                        >
-                          Price:
-                        </font>
-                      </span>
-                      <span
-                        style="
-                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          letter-spacing: 0.6px;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
-                        >
-                          ${item.finalPrice.toFixed(2)}€
-                        </font>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td height="6" style="font-size: 6px; line-height: 6px">
-                      &nbsp;
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="left">
-                      <span
-                        style="
-                          font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          text-transform: uppercase;
-                          letter-spacing: 0.8px;
-                          font-weight: 700;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
-                        >
-                          Qty:
-                        </font>
-                      </span>
-                      <span
-                        style="
-                          font-family: 'FuturaPTBook-Reg', Futura, Arial,
-                            sans-serif;
-                          color: #2d2d2d;
-                          font-size: 10px;
-                          line-height: 14px;
-                          letter-spacing: 0.6px;
-                        "
-                      >
-                        <font
-                          face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
-                        >
-                          ${item.qty}
-                        </font>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-            <td width="20">&nbsp;</td>
-          </tr>
-        </tbody>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td height="12" style="font-size: 12px; line-height: 12px">&nbsp;</td>
-  </tr>`;
+        <td>
+          <table width="560" cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+              <tr>
+                <td width="110" valign="top">
+                  <a
+                    href="${
+                      process.env.HOME_PAGE || "http://localhost:3000"
+                    }/product/${item.product}"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <img
+                      src="${item.image}"
+                      alt="product"
+                      width="110"
+                      border="0"
+                      style="display: block"
+                      class="CToWUd"
+                    />
+                  </a>
+                </td>
+                <td width="20">&nbsp;</td>
+                <td width="430" valign="top">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                      <tr>
+                        <td align="left">
+                          <span
+                            style="
+                              font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              text-transform: uppercase;
+                              letter-spacing: 0.8px;
+                              font-weight: 700;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                            >
+                              Name:
+                            </font>
+                          </span>
+                          <span
+                            style="
+                              font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              letter-spacing: 0.6px;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                            >
+                              ${item.name}
+                            </font>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="6" style="font-size: 6px; line-height: 6px">
+                          &nbsp;
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left">
+                          <span
+                            style="
+                              font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              text-transform: uppercase;
+                              letter-spacing: 0.8px;
+                              font-weight: 700;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                            >
+                              Price:
+                            </font>
+                          </span>
+                          <span
+                            style="
+                              font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              letter-spacing: 0.6px;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                            >
+                              ${item.finalPrice.toFixed(2)}€
+                            </font>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="6" style="font-size: 6px; line-height: 6px">
+                          &nbsp;
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left">
+                          <span
+                            style="
+                              font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              text-transform: uppercase;
+                              letter-spacing: 0.8px;
+                              font-weight: 700;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                            >
+                              Qty:
+                            </font>
+                          </span>
+                          <span
+                            style="
+                              font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                                sans-serif;
+                              color: #2d2d2d;
+                              font-size: 10px;
+                              line-height: 14px;
+                              letter-spacing: 0.6px;
+                            "
+                          >
+                            <font
+                              face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                            >
+                              ${item.qty}
+                            </font>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td width="20">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td height="12" style="font-size: 12px; line-height: 12px">&nbsp;</td>
+      </tr>`;
   });
 
   return `<!DOCTYPE html>
@@ -180,7 +180,7 @@ export const cancelOrder = ({
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Cancel Order Email</title>
+      <title>Cancel Order Admin Email</title>
     </head>
     <body style="margin: 0; padding: 0">
       <div
@@ -302,7 +302,7 @@ export const cancelOrder = ({
                                 <font
                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                 >
-                                  Order Canceled!
+                                  Order canceled!
                                 </font>
                               </td>
                             </tr>
@@ -329,7 +329,9 @@ export const cancelOrder = ({
                                 <font
                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                 >
-                                  Hi ${userName}, your order was canceled!
+                                  Hi ${
+                                    process.env.BRAND_NAME
+                                  }, you recieved a refund request from ${userName}!
                                 </font>
                               </td>
                             </tr>
@@ -500,17 +502,18 @@ export const cancelOrder = ({
                                                   font-family: 'FuturaPTHeavy-Reg',
                                                     Futura, Arial, sans-serif;
                                                   color: #2d2d2d;
+                                                  text-decoration: none;
                                                   text-transform: uppercase;
                                                   font-weight: 700;
-                                                  font-size: 14px;
-                                                  line-height: 20px;
+                                                  font-size: 16px;
+                                                  line-height: 22px;
                                                   letter-spacing: 0.6px;
                                                 "
                                               >
                                                 <font
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  The Refund
+                                                  User details
                                                 </font>
                                               </td>
                                             </tr>
@@ -527,12 +530,11 @@ export const cancelOrder = ({
                                             </tr>
                                             <tr>
                                               <td
+                                                align="center"
                                                 style="
                                                   border-top: solid #d0d0d0 1px;
                                                   font-size: 1px;
-                                                  line-height: 1px;
                                                 "
-                                                width="100%"
                                               >
                                                 &nbsp;
                                               </td>
@@ -563,47 +565,47 @@ export const cancelOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                We have processed your refund and it should reflect in your PayPal account in the 2-3 business days!
+                                                  Name: ${userName}
                                                 </font>
                                               </td>
+                                          </tr>
+                                            <tr>
+                                                <td
+                                                  align="left"
+                                                  style="
+                                                    font-family: 'FuturaPTBook-Reg',
+                                                      Futura, Arial, sans-serif;
+                                                    color: #2d2d2d;
+                                                    font-size: 14px;
+                                                    line-height: 20px;
+                                                    letter-spacing: 0.6px;
+                                                  "
+                                                >
+                                                  <font
+                                                    face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                  >
+                                                    Email: ${email}
+                                                  </font>
+                                                </td>
                                             </tr>
                                             <tr>
-                                              <td
-                                                align="left"
-                                                style="
-                                                  font-family: 'FuturaPTBook-Reg',
-                                                    Futura, Arial, sans-serif;
-                                                  color: #2d2d2d;
-                                                  font-size: 14px;
-                                                  line-height: 20px;
-                                                  letter-spacing: 0.6px;
-                                                "
-                                              >
-                                                <font
-                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                <td
+                                                  align="left"
+                                                  style="
+                                                    font-family: 'FuturaPTBook-Reg',
+                                                      Futura, Arial, sans-serif;
+                                                    color: #2d2d2d;
+                                                    font-size: 14px;
+                                                    line-height: 20px;
+                                                    letter-spacing: 0.6px;
+                                                  "
                                                 >
-                                                We'll be in contact with you as soon as possible.
-                                                </font>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td
-                                                align="left"
-                                                style="
-                                                  font-family: 'FuturaPTBook-Reg',
-                                                    Futura, Arial, sans-serif;
-                                                  color: #2d2d2d;
-                                                  font-size: 14px;
-                                                  line-height: 20px;
-                                                  letter-spacing: 0.6px;
-                                                "
-                                              >
-                                                <font
-                                                  face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
-                                                >
-                                                If you are still on the lookout for other options, please do let us know!
-                                                </font>
-                                              </td>
+                                                  <font
+                                                    face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                                                  >
+                                                    Phone Number: ${phoneNumber}
+                                                  </font>
+                                                </td>
                                             </tr>
                                             <tr>
                                               <td
@@ -631,13 +633,17 @@ export const cancelOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                For any questions or information please contact us at: ${
-                                                  process.env
-                                                    .SENDER_EMAIL_ADDRESS
-                                                }
+                                                  Access your PayPal Business account and refund ${totalPrice.toFixed(
+                                                    2
+                                                  )}€ to ${userName} here: 
+                                                  ${
+                                                    process.env
+                                                      .PAYPAL_BUSINESS_LINK ||
+                                                    "https://www.sandbox.paypal.com/activities"
+                                                  }
                                                 </font>
                                               </td>
-                                            </tr>
+                                          </tr>
                                             <tr>
                                               <td
                                                 height="24"
@@ -717,6 +723,7 @@ export const cancelOrder = ({
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
                                                   ${orderItems.length} item(s)
+                                                  sent
                                                 </font>
                                               </td>
                                             </tr>
@@ -914,71 +921,6 @@ export const cancelOrder = ({
                               <td
                                 height="24"
                                 style="font-size: 24px; line-height: 24px"
-                              >
-                                &nbsp;
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td width="20">&nbsp;</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table
-                  width="640"
-                  cellpadding="0"
-                  cellspacing="0"
-                  border="0"
-                  style="background-color: #2d2d2d"
-                >
-                  <tbody>
-                    <tr>
-                      <td width="20">&nbsp;</td>
-                      <td width="600">
-                        <table
-                          width="600"
-                          cellpadding="0"
-                          cellspacing="0"
-                          border="0"
-                          align="center"
-                        >
-                          <tbody>
-                            <tr>
-                              <td height="24" style="font-size: 24px; line-height: 24px">
-                                &nbsp;
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                align="center"
-                                style="
-                                  font-family: 'FuturaPTBook-Reg', Futura, Arial, sans-serif;
-                                  color: #dddddd;
-                                  font-size: 10px;
-                                  line-height: 18px;
-                                  letter-spacing: 0.6px;
-                                "
-                              >
-                                <font face="'FuturaPTBook-Reg', Futura, Arial, sans-serif">
-                                  For any questions or information please contact us at: ${
-                                    process.env.SENDER_EMAIL_ADDRESS
-                                  }
-                                </font>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                height="24"
-                                style="
-                                  font-size: 24px;
-                                  line-height: 24px;
-                                  border-bottom: 1px solid #525050;
-                                "
                               >
                                 &nbsp;
                               </td>
