@@ -477,7 +477,7 @@ export const resetPassword = ({ userInfo: { userId, email } }) => {
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
                                                   Simply copy and paste this link into your browser instead: 
-                                                  <a href="" style="color:#0770cf;text-decoration:underline;word-break:break-all" target="_blank">
+                                                  <a href="${resetPasswordLink}" style="color:#0770cf;text-decoration:underline;word-break:break-all" target="_blank">
                                                     <font face="'FuturaPTBook-Reg', Futura, Arial, sans-serif" style="word-break:break-all">
                                                       ${resetPasswordLink}
                                                     </font>
@@ -556,6 +556,71 @@ export const resetPassword = ({ userInfo: { userId, email } }) => {
                               <td
                                 height="24"
                                 style="font-size: 24px; line-height: 24px"
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td width="20">&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table
+                  width="640"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="background-color: #2d2d2d"
+                >
+                  <tbody>
+                    <tr>
+                      <td width="20">&nbsp;</td>
+                      <td width="600">
+                        <table
+                          width="600"
+                          cellpadding="0"
+                          cellspacing="0"
+                          border="0"
+                          align="center"
+                        >
+                          <tbody>
+                            <tr>
+                              <td height="24" style="font-size: 24px; line-height: 24px">
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial, sans-serif;
+                                  color: #dddddd;
+                                  font-size: 10px;
+                                  line-height: 18px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font face="'FuturaPTBook-Reg', Futura, Arial, sans-serif">
+                                  For any questions or information please contact us at: ${
+                                    process.env.SENDER_EMAIL_ADDRESS
+                                  }
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="
+                                  font-size: 24px;
+                                  line-height: 24px;
+                                  border-bottom: 1px solid #525050;
+                                "
                               >
                                 &nbsp;
                               </td>

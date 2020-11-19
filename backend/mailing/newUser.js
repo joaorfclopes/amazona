@@ -286,6 +286,71 @@ export const newUser = ({ userInfo: { userName } }) => {
                 </table>
               </td>
             </tr>
+            <tr>
+              <td>
+                <table
+                  width="640"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="background-color: #2d2d2d"
+                >
+                  <tbody>
+                    <tr>
+                      <td width="20">&nbsp;</td>
+                      <td width="600">
+                        <table
+                          width="600"
+                          cellpadding="0"
+                          cellspacing="0"
+                          border="0"
+                          align="center"
+                        >
+                          <tbody>
+                            <tr>
+                              <td height="24" style="font-size: 24px; line-height: 24px">
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                align="center"
+                                style="
+                                  font-family: 'FuturaPTBook-Reg', Futura, Arial, sans-serif;
+                                  color: #dddddd;
+                                  font-size: 10px;
+                                  line-height: 18px;
+                                  letter-spacing: 0.6px;
+                                "
+                              >
+                                <font face="'FuturaPTBook-Reg', Futura, Arial, sans-serif">
+                                  For any questions or information please contact us at: ${
+                                    process.env.SENDER_EMAIL_ADDRESS
+                                  }
+                                </font>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td
+                                height="24"
+                                style="
+                                  font-size: 24px;
+                                  line-height: 24px;
+                                  border-bottom: 1px solid #525050;
+                                "
+                              >
+                                &nbsp;
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td width="20">&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
           </tbody>
         </table>
         <table

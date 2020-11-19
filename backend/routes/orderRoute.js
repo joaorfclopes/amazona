@@ -141,9 +141,9 @@ orderRouter.put(
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
-      order.status = "CANCELLED";
+      order.status = "CANCELED";
       const updatedOrder = await order.save();
-      res.send({ message: "Order cancelled", order: updatedOrder });
+      res.send({ message: "Order canceled", order: updatedOrder });
     } else {
       res.status(404).send({ message: "Order not found" });
     }

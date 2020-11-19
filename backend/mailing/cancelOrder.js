@@ -1,9 +1,8 @@
-export const placedOrder = ({
+export const cancelOrder = ({
   userInfo: { userName },
   order: {
     orderId,
     orderDate,
-    shippingAddress: { fullName, address, country, postalCode, city },
     orderItems,
     itemsPrice,
     shippingPrice,
@@ -181,7 +180,7 @@ export const placedOrder = ({
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Place Order Email</title>
+      <title>Cancel Order Email</title>
     </head>
     <body style="margin: 0; padding: 0">
       <div
@@ -303,7 +302,7 @@ export const placedOrder = ({
                                 <font
                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                 >
-                                  We’ve sent it!
+                                  Order Canceled!
                                 </font>
                               </td>
                             </tr>
@@ -330,8 +329,7 @@ export const placedOrder = ({
                                 <font
                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                 >
-                                  Hi ${userName}, your parcel is on its way and it
-                                  should be with you soon!
+                                  Hi ${userName}, your order was canceled!
                                 </font>
                               </td>
                             </tr>
@@ -502,18 +500,17 @@ export const placedOrder = ({
                                                   font-family: 'FuturaPTHeavy-Reg',
                                                     Futura, Arial, sans-serif;
                                                   color: #2d2d2d;
-                                                  text-decoration: none;
                                                   text-transform: uppercase;
                                                   font-weight: 700;
-                                                  font-size: 16px;
-                                                  line-height: 22px;
+                                                  font-size: 14px;
+                                                  line-height: 20px;
                                                   letter-spacing: 0.6px;
                                                 "
                                               >
                                                 <font
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  Delivery details
+                                                  The Refund
                                                 </font>
                                               </td>
                                             </tr>
@@ -530,53 +527,22 @@ export const placedOrder = ({
                                             </tr>
                                             <tr>
                                               <td
-                                                align="center"
                                                 style="
                                                   border-top: solid #d0d0d0 1px;
                                                   font-size: 1px;
+                                                  line-height: 1px;
                                                 "
+                                                width="100%"
                                               >
                                                 &nbsp;
                                               </td>
                                             </tr>
                                             <tr>
                                               <td
-                                                height="24"
+                                                height="12"
                                                 style="
-                                                  font-size: 24px;
-                                                  line-height: 24px;
-                                                "
-                                              >
-                                                &nbsp;
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td
-                                                align="left"
-                                                style="
-                                                  font-family: 'FuturaPTHeavy-Reg',
-                                                    Futura, Arial, sans-serif;
-                                                  color: #767676;
-                                                  font-size: 14px;
-                                                  font-weight: 700;
-                                                  line-height: 20px;
-                                                  letter-spacing: 0.6px;
-                                                  text-transform: uppercase;
-                                                "
-                                              >
-                                                <font
-                                                  face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
-                                                >
-                                                  Shipping address
-                                                </font>
-                                              </td>
-                                            </tr>
-                                            <tr>
-                                              <td
-                                                height="4"
-                                                style="
-                                                  font-size: 4px;
-                                                  line-height: 4px;
+                                                  font-size: 12px;
+                                                  line-height: 12px;
                                                 "
                                               >
                                                 &nbsp;
@@ -597,7 +563,7 @@ export const placedOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  ${fullName}
+                                                We have processed your refund and it should reflect in your bank account in the 2-3 business days!
                                                 </font>
                                               </td>
                                             </tr>
@@ -616,7 +582,7 @@ export const placedOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  ${address}
+                                                We'll be in contact with you as soon as possible.
                                                 </font>
                                               </td>
                                             </tr>
@@ -635,8 +601,19 @@ export const placedOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  ${country}
+                                                If you are still on the lookout for other options, please do let us know!
                                                 </font>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td
+                                                height="12"
+                                                style="
+                                                  font-size: 12px;
+                                                  line-height: 12px;
+                                                "
+                                              >
+                                                &nbsp;
                                               </td>
                                             </tr>
                                             <tr>
@@ -654,8 +631,10 @@ export const placedOrder = ({
                                                 <font
                                                   face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
                                                 >
-                                                  ${postalCode} ${city},
-                                                  ${country}
+                                                For any questions or information please contact us at: ${
+                                                  process.env
+                                                    .SENDER_EMAIL_ADDRESS
+                                                }
                                                 </font>
                                               </td>
                                             </tr>
@@ -738,7 +717,6 @@ export const placedOrder = ({
                                                   face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
                                                 >
                                                   ${orderItems.length} item(s)
-                                                  sent
                                                 </font>
                                               </td>
                                             </tr>

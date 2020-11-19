@@ -237,6 +237,18 @@ export const cancelOrder = (orderId) => async (dispatch, getState) => {
       }
     );
     dispatch({ type: ORDER_CANCEL_SUCCESS, payload: data });
+    if (data.order.isPaid) {
+      // eslint-disable-next-line no-unused-vars
+      const { sendEmail } = await Axios.post(
+        "/api/email/cancelOrder",
+        { order: data.order, userInfo: userInfo },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+    }
   } catch (error) {
     dispatch({
       type: ORDER_CANCEL_FAIL,

@@ -8,6 +8,7 @@ import { newUser } from "../mailing/newUser.js";
 import { placedOrder } from "../mailing/placedOrder.js";
 import { placedOrderAdmin } from "../mailing/placedOrderAdmin.js";
 import { resetPassword } from "../mailing/resetPassword.js";
+import { cancelOrder } from "../mailing/cancelOrder.js";
 
 const emailRouter = express.Router();
 
@@ -73,6 +74,32 @@ emailRouter.post(
             postalCode: req.body.order.shippingAddress.postalCode,
             city: req.body.order.shippingAddress.city,
           },
+          orderItems: req.body.order.orderItems,
+          itemsPrice: req.body.order.itemsPrice,
+          shippingPrice: req.body.order.shippingPrice,
+          totalPrice: req.body.order.totalPrice,
+        },
+      }),
+    };
+    sendEmail(res, mailOptions);
+  })
+);
+
+emailRouter.post(
+  "/cancelOrder",
+  isAuth,
+  expressAsyncHandler((req, res) => {
+    const mailOptions = {
+      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+      to: req.body.userInfo.email,
+      subject: "Order Canceled!",
+      html: cancelOrder({
+        userInfo: {
+          userName: req.body.userInfo.name,
+        },
+        order: {
+          orderId: req.body.order._id,
+          orderDate: formatDate(req.body.order.createdAt),
           orderItems: req.body.order.orderItems,
           itemsPrice: req.body.order.itemsPrice,
           shippingPrice: req.body.order.shippingPrice,

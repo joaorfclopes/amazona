@@ -104,7 +104,9 @@ export default function OrderScreen(props) {
   };
 
   const cancelHandler = () => {
-    dispatch(cancelOrder(order._id));
+    if (window.confirm(`Cancel order ${order._id}?`)) {
+      dispatch(cancelOrder(order._id));
+    }
   };
 
   return loading ? (
@@ -116,7 +118,7 @@ export default function OrderScreen(props) {
       <h1>Order {order._id}</h1>
       {loadingCancel && <LoadingBox />}
       {errorCancel && <MessageBox variant="danger">{errorCancel}</MessageBox>}
-      {order.status === "CANCELLED" && (
+      {order.status === "CANCELED" && (
         <MessageBox variant="danger">This order was deleted</MessageBox>
       )}
       <div className="row top">
@@ -235,7 +237,7 @@ export default function OrderScreen(props) {
                   </div>
                 </div>
               </li>
-              {order.status !== "CANCELLED" && !order.isPaid && (
+              {order.status !== "CANCELED" && !order.isPaid && (
                 <li>
                   {!sdkReady ? (
                     <LoadingBox />
@@ -257,7 +259,7 @@ export default function OrderScreen(props) {
               {userInfo.isAdmin &&
                 order.isPaid &&
                 !order.isDelivered &&
-                order.status !== "CANCELLED" && (
+                order.status !== "CANCELED" && (
                   <li>
                     {loadingDeliver && <LoadingBox />}
                     {errorDeliver && (
@@ -272,7 +274,7 @@ export default function OrderScreen(props) {
                     </button>
                   </li>
                 )}
-              {order.status !== "CANCELLED" && !order.isDelivered && (
+              {order.status !== "CANCELED" && !order.isDelivered && (
                 <li>
                   <button
                     type="button"
