@@ -11,6 +11,7 @@ export default function ProfileScreen() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [changePassword, setChangePassword] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -34,6 +35,7 @@ export default function ProfileScreen() {
     } else {
       setName(user.name);
       setEmail(user.email);
+      setPhoneNumber(user.phoneNumber);
     }
   }, [dispatch, userInfo, user, successUpdate]);
 
@@ -48,7 +50,13 @@ export default function ProfileScreen() {
       } else {
         if (bcrypt.compareSync(oldPassword, user.password)) {
           dispatch(
-            updateUser({ userId: user._id, name, email, password: newPassword })
+            updateUser({
+              userId: user._id,
+              name,
+              email,
+              phoneNumber,
+              password: newPassword,
+            })
           );
         } else {
           const newPasswordError = document.getElementById("newPasswordError");
@@ -58,7 +66,7 @@ export default function ProfileScreen() {
         }
       }
     } else {
-      dispatch(updateUser({ userId: user._id, name, email }));
+      dispatch(updateUser({ userId: user._id, name, email, phoneNumber }));
     }
   };
 
@@ -114,6 +122,16 @@ export default function ProfileScreen() {
               />
             </div>
             <div>
+              <label htmlFor="phoneNumber">Phone number</label>
+              <input
+                type="number"
+                id="phoneNumber"
+                placeholder="Enter phone number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+            <div>
               <button
                 type="button"
                 onClick={() => setChangePassword(!changePassword)}
@@ -139,7 +157,7 @@ export default function ProfileScreen() {
                   <input
                     type="password"
                     id="newPassword"
-                    minlength="5"
+                    minLength="5"
                     placeholder="Enter password"
                     onChange={(e) => {
                       setNewPassword(e.target.value);

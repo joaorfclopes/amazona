@@ -41,6 +41,7 @@ userRouter.post(
     const user = new User({
       name: req.body.name,
       email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
       password: bcrypt.hashSync(req.body.password, 8),
     });
     try {
@@ -49,11 +50,12 @@ userRouter.post(
         _id: createdUser._id,
         name: createdUser.name,
         email: createdUser.email,
+        phoneNumber: createdUser.phoneNumber,
         isAdmin: createdUser.isAdmin,
         token: generateToken(createdUser),
       });
     } catch (error) {
-      res.status(401).send({ message: "Email already in use" });
+      res.status(401).send({ message: "Email or Phone Number already in use" });
     }
   })
 );
@@ -79,6 +81,7 @@ userRouter.put(
       if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
+        user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
         if (req.body.password) {
           user.password = bcrypt.hashSync(req.body.password, 8);
         }
@@ -87,6 +90,7 @@ userRouter.put(
           _id: updatedUser._id,
           name: updatedUser.name,
           email: updatedUser.email,
+          phoneNumber: updatedUser.phoneNumber,
           isAdmin: updatedUser.isAdmin,
           token: generateToken(updatedUser),
         });

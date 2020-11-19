@@ -9,6 +9,7 @@ export default function RegisterScreen(props) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -25,7 +26,7 @@ export default function RegisterScreen(props) {
       const passwordError = document.getElementById("passwordError");
       passwordError.style.display = "block";
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, phoneNumber, password));
     }
   };
 
@@ -67,11 +68,21 @@ export default function RegisterScreen(props) {
           />
         </div>
         <div>
+          <label htmlFor="phoneNumber">Phone number</label>
+          <input
+            type="number"
+            id="phoneNumber"
+            placeholder="Enter phone number"
+            required
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </div>
+        <div>
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
-            minlength="5"
+            minLength="5"
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}
