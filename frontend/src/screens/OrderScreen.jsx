@@ -100,7 +100,9 @@ export default function OrderScreen(props) {
   };
 
   const deliverHandler = () => {
-    dispatch(deliverOrder(order._id));
+    if (window.confirm(`Deliver order ${order._id}?`)) {
+      dispatch(deliverOrder(order._id));
+    }
   };
 
   const cancelHandler = () => {

@@ -123,26 +123,35 @@ emailRouter.post(
 emailRouter.post(
   "/cancelOrder",
   isAuth,
-  expressAsyncHandler((req, res) => {
-    const mailOptions = {
-      from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
-      to: req.body.userInfo.email,
-      subject: "Order Canceled!",
-      html: cancelOrder({
-        userInfo: {
-          userName: req.body.userInfo.name,
-        },
-        order: {
-          orderId: req.body.order._id,
-          orderDate: formatDate(req.body.order.createdAt),
-          orderItems: req.body.order.orderItems,
-          itemsPrice: req.body.order.itemsPrice,
-          shippingPrice: req.body.order.shippingPrice,
-          totalPrice: req.body.order.totalPrice,
-        },
-      }),
-    };
-    sendEmail(res, mailOptions);
+  expressAsyncHandler(async (req, res) => {
+    if (req.body.order.user) {
+      const user = await User.findById(req.body.order.user);
+      try {
+        const mailOptions = {
+          from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+          to: user.email,
+          subject: "Order Canceled!",
+          html: cancelOrder({
+            userInfo: {
+              userName: req.body.userInfo.name,
+            },
+            order: {
+              orderId: req.body.order._id,
+              orderDate: formatDate(req.body.order.createdAt),
+              orderItems: req.body.order.orderItems,
+              itemsPrice: req.body.order.itemsPrice,
+              shippingPrice: req.body.order.shippingPrice,
+              totalPrice: req.body.order.totalPrice,
+            },
+          }),
+        };
+        sendEmail(res, mailOptions);
+      } catch (error) {
+        res.status(404).send({ message: "Order doesn't exist" });
+      }
+    } else {
+      res.status(404).send({ message: "Error cancelling order" });
+    }
   })
 );
 
