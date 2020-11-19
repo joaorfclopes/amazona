@@ -235,7 +235,7 @@ export default function OrderScreen(props) {
                   </div>
                 </div>
               </li>
-              {!order.isPaid && order.status !== "CANCELLED" && (
+              {order.status !== "CANCELLED" && !order.isPaid && (
                 <li>
                   {!sdkReady ? (
                     <LoadingBox />
