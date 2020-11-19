@@ -152,7 +152,7 @@ emailRouter.post(
   expressAsyncHandler((req, res) => {
     const mailOptions = {
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
-      to: req.body.userInfo.email,
+      to: process.env.SENDER_EMAIL_ADDRESS,
       subject: "Order Canceled!",
       html: cancelOrderAdmin({
         userInfo: {
