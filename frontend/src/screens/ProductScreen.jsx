@@ -35,6 +35,7 @@ export default function ProductScreen(props) {
               <li>
                 <h1>{product.name}</h1>
               </li>
+              <li>Category: {product.category}</li>
               <li>
                 Price:{" "}
                 {product.finalPrice
@@ -42,9 +43,7 @@ export default function ProductScreen(props) {
                   : product.finalPrice}
                 €
               </li>
-              <li>
-                Description: <p>{product.description}</p>
-              </li>
+              <li>Description: {product.description}</li>
             </ul>
           </div>
           <div className="col-1">

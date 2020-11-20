@@ -37,6 +37,16 @@ export default function ProductEditScreen(props) {
   const [taxPrice, setTaxPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
+  const categoryOptions = [
+    "Clothing",
+    "Carteiras",
+    "Diskette",
+    "Pinturas",
+    "Prints",
+    "Tapetes",
+    "Jóias",
+  ];
+
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -50,7 +60,7 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
-      setCategory(product.category);
+      setCategory(product.category || "Clothing");
       setCountInStock(product.countInStock);
       setDescription(product.description);
       setTaxPrice(product.taxPrice);
@@ -159,13 +169,16 @@ export default function ProductEditScreen(props) {
             </div>
             <div>
               <label htmlFor="category">Category</label>
-              <input
-                type="text"
-                id="category"
-                placeholder="Enter category"
+              <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
+              >
+                {categoryOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="countInStock">Count In Stock</label>
