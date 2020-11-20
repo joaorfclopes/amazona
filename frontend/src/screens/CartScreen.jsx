@@ -58,7 +58,11 @@ export default function CartScreen(props) {
                         )
                       }
                     >
-                      {[...Array(item.countInStock).keys()].map((x) => (
+                      {[
+                        ...Array(
+                          item.countInStock >= 5 ? 5 : item.countInStock
+                        ).keys(),
+                      ].map((x) => (
                         <option key={x + 1} value={x + 1}>
                           {x + 1}
                         </option>
