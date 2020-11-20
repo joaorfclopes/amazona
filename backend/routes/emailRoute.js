@@ -3,10 +3,11 @@ import expressAsyncHandler from "express-async-handler";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
-import { isAuth, formatDate } from "../utils.js";
+import { isAuth, formatDate, isAdmin } from "../utils.js";
 import { newUser } from "../mailing/newUser.js";
 import { placedOrder } from "../mailing/placedOrder.js";
 import { placedOrderAdmin } from "../mailing/placedOrderAdmin.js";
+import { deliveredOrder } from "../mailing/deliveredOrder.js";
 import { resetPassword } from "../mailing/resetPassword.js";
 import { cancelOrder } from "../mailing/cancelOrder.js";
 import { cancelOrderAdmin } from "../mailing/cancelOrderAdmin.js";
@@ -121,6 +122,49 @@ emailRouter.post(
 );
 
 emailRouter.post(
+  "/deliveredOrder",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    if (req.body.order.user) {
+      const user = await User.findById(req.body.order.user);
+      try {
+        const mailOptions = {
+          from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
+          to: user.email,
+          subject: "Thanks for your order!",
+          html: deliveredOrder({
+            userInfo: {
+              userName: req.body.userInfo.name,
+            },
+            order: {
+              orderId: req.body.order._id,
+              orderDate: formatDate(req.body.order.createdAt),
+              shippingAddress: {
+                fullName: req.body.order.shippingAddress.fullName,
+                address: req.body.order.shippingAddress.address,
+                country: req.body.order.shippingAddress.country,
+                postalCode: req.body.order.shippingAddress.postalCode,
+                city: req.body.order.shippingAddress.city,
+              },
+              orderItems: req.body.order.orderItems,
+              itemsPrice: req.body.order.itemsPrice,
+              shippingPrice: req.body.order.shippingPrice,
+              totalPrice: req.body.order.totalPrice,
+            },
+          }),
+        };
+        sendEmail(res, mailOptions);
+      } catch (error) {
+        res.status(404).send({ message: "Order doesn't exist" });
+      }
+    } else {
+      res.status(404).send({ message: "Error delivering order" });
+    }
+  })
+);
+
+emailRouter.post(
   "/cancelOrder",
   isAuth,
   expressAsyncHandler(async (req, res) => {
@@ -162,7 +206,7 @@ emailRouter.post(
     const mailOptions = {
       from: `${process.env.SENDER_USER_NAME} <${process.env.SENDER_EMAIL_ADDRESS}>`,
       to: process.env.SENDER_EMAIL_ADDRESS,
-      subject: "Order Canceled!",
+      subject: "Refund Request",
       html: cancelOrderAdmin({
         userInfo: {
           userName: req.body.userInfo.name,
