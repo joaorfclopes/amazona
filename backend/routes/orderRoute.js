@@ -2,6 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
+import Product from "../models/productModel.js";
 import { isAdmin, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
@@ -127,6 +128,14 @@ orderRouter.put(
         update_time: req.body.update_time,
         email_address: req.body.email_address,
       };
+      order.orderItems.forEach(async (item) => {
+        const product = await Product.findOne({
+          name: item.name,
+        });
+        product.countInStock = product.countInStock - item.qty;
+        // eslint-disable-next-line no-unused-vars
+        const updatedProduct = await product.save();
+      });
       const updatedOrder = await order.save();
       res.send({ message: "Order paid", order: updatedOrder });
     } else {
@@ -142,6 +151,16 @@ orderRouter.put(
     const order = await Order.findById(req.params.id);
     if (order) {
       order.status = "CANCELED";
+      if (order.isPaid) {
+        order.orderItems.forEach(async (item) => {
+          const product = await Product.findOne({
+            name: item.name,
+          });
+          product.countInStock = product.countInStock + item.qty;
+          // eslint-disable-next-line no-unused-vars
+          const updatedProduct = await product.save();
+        });
+      }
       const updatedOrder = await order.save();
       res.send({ message: "Order canceled", order: updatedOrder });
     } else {
