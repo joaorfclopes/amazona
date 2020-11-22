@@ -71,8 +71,15 @@ export default function ProductEditScreen(props) {
       setCategory(product.category || "T-Shirts");
       if (product.category === "T-Shirts" || product.category === "Hoodies") {
         setSizable(true);
+        setCountInStock("");
       } else {
         setSizable(false);
+        setCountInStockXS("");
+        setCountInStockS("");
+        setCountInStockM("");
+        setCountInStockL("");
+        setCountInStockXL("");
+        setCountInStockXXL("");
       }
       if (product.countInStock) {
         setCountInStock(product.countInStock.stock);
@@ -145,8 +152,15 @@ export default function ProductEditScreen(props) {
     setCategory(e.target.value);
     if (e.target.value === "T-Shirts" || e.target.value === "Hoodies") {
       setSizable(true);
+      setCountInStock("");
     } else {
       setSizable(false);
+      setCountInStockXS("");
+      setCountInStockS("");
+      setCountInStockM("");
+      setCountInStockL("");
+      setCountInStockXL("");
+      setCountInStockXXL("");
     }
   };
 
