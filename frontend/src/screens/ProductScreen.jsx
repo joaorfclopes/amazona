@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { detailsProduct } from "../actions/productActions";
+import { sizes } from "../utils";
 
 export default function ProductScreen(props) {
   const dispatch = useDispatch();
@@ -12,14 +13,16 @@ export default function ProductScreen(props) {
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("XS");
 
-  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
   useEffect(() => {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
   const addToCartHandler = () => {
-    props.history.push(`/cart/${productId}?qty=${qty}`);
+    if (!product.isClothing) {
+      props.history.push(`/cart/${productId}?qty=${qty}`);
+    } else {
+      props.history.push(`/cart/${productId}?size=${size}&qty=${qty}`);
+    }
   };
 
   const availability = (val) => {

@@ -70,6 +70,52 @@ const itemsDetails = (orderItems) =>
                       &nbsp;
                     </td>
                   </tr>
+                  ${
+                    item.size !== "null" &&
+                    `<tr>
+                  <td align="left">
+                    <span
+                      style="
+                        font-family: 'FuturaPTHeavy-Reg', Futura, Arial,
+                          sans-serif;
+                        color: #2d2d2d;
+                        font-size: 10px;
+                        line-height: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.8px;
+                        font-weight: 700;
+                      "
+                    >
+                      <font
+                        face="'FuturaPTHeavy-Reg', Futura, Arial, sans-serif"
+                      >
+                        Size:
+                      </font>
+                    </span>
+                    <span
+                      style="
+                        font-family: 'FuturaPTBook-Reg', Futura, Arial,
+                          sans-serif;
+                        color: #2d2d2d;
+                        font-size: 10px;
+                        line-height: 14px;
+                        letter-spacing: 0.6px;
+                      "
+                    >
+                      <font
+                        face="'FuturaPTBook-Reg', Futura, Arial, sans-serif"
+                      >
+                        ${item.size}
+                      </font>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="6" style="font-size: 6px; line-height: 6px">
+                    &nbsp;
+                  </td>
+                </tr>`
+                  }
                   <tr>
                     <td align="left">
                       <span

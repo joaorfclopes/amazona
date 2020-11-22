@@ -177,6 +177,7 @@ export default function OrderScreen(props) {
                             {item.name}
                           </Link>
                         </div>
+                        {item.size !== "null" && <div>Size: {item.size}</div>}
                         <div>
                           {item.qty} x{" "}
                           {item.finalPrice

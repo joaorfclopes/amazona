@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
+import { sizes } from "../utils";
 
 export default function CartScreen(props) {
   const productId = props.match.params.id;
-  const qty = props.location.search
-    ? Number(props.location.search.split("=")[1])
-    : 1;
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const [qty, setQty] = useState(Number(urlParams.get("qty")));
+  const [size, setSize] = useState(String(urlParams.get("size")));
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const dispatch = useDispatch();
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty));
+      dispatch(addToCart(productId, qty, size));
     }
-  }, [dispatch, productId, qty]);
+  }, [dispatch, productId, qty, size]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -25,6 +27,16 @@ export default function CartScreen(props) {
 
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");
+  };
+
+  const setSizeAddCart = (id, e) => {
+    setSize(String(e.target.value));
+    dispatch(addToCart(id, qty, String(e.target.value)));
+  };
+
+  const setQtyAddCart = (id, e) => {
+    setQty(Number(e.target.value));
+    dispatch(addToCart(id, Number(e.target.value), size));
   };
   return (
     <div className="row top">
@@ -49,20 +61,32 @@ export default function CartScreen(props) {
                   <div className="min-30">
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
+                  {item.isClothing && (
+                    <div>
+                      <select
+                        value={item.size}
+                        onChange={(e) => setSizeAddCart(item.product, e)}
+                      >
+                        {sizes.map((x) => (
+                          <option key={x} value={x}>
+                            {x}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                   <div>
                     <select
                       value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
+                      onChange={(e) => setQtyAddCart(item.product, e)}
                     >
                       {[
                         ...Array(
-                          !item.isClothing && item.countInStock.stock >= 5
-                            ? 5
-                            : item.countInStock.stock
+                          !item.isClothing
+                            ? item.countInStock.stock >= 5
+                              ? 5
+                              : item.countInStock.stock
+                            : 5
                         ).keys(),
                       ].map((x) => (
                         <option key={x + 1} value={x + 1}>

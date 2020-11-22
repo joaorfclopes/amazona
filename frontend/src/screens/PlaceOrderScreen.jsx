@@ -76,6 +76,7 @@ export default function PlaceOrderScreen(props) {
                             {item.name}
                           </Link>
                         </div>
+                        {item.isClothing && <div>Size: {item.size}</div>}
                         <div>
                           {item.qty} x{" "}
                           {item.finalPrice
