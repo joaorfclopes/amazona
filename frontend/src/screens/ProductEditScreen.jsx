@@ -191,53 +191,17 @@ export default function ProductEditScreen(props) {
             {category === "T-Shirts" || category === "Hoodies" ? (
               <div>
                 <label>Count In Stock</label>
-                <input
-                  type="number"
-                  id="countInStockXS"
-                  placeholder="XS"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockXS" placeholder="XS" />
                 <br />
-                <input
-                  type="number"
-                  id="countInStockS"
-                  placeholder="S"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockS" placeholder="S" />
                 <br />
-                <input
-                  type="number"
-                  id="countInStockM"
-                  placeholder="M"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockM" placeholder="M" />
                 <br />
-                <input
-                  type="number"
-                  id="countInStockL"
-                  placeholder="L"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockL" placeholder="L" />
                 <br />
-                <input
-                  type="number"
-                  id="countInStockXL"
-                  placeholder="XL"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockXL" placeholder="XL" />
                 <br />
-                <input
-                  type="number"
-                  id="countInStockXXL"
-                  placeholder="XXL"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                />
+                <input type="number" id="countInStockXXL" placeholder="XXL" />
               </div>
             ) : (
               <div>
