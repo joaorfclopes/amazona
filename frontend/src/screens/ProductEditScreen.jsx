@@ -30,6 +30,7 @@ export default function ProductEditScreen(props) {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
+  const [sizable, setSizable] = useState(true);
   const [countInStock, setCountInStock] = useState("");
   const [description, setDescription] = useState("");
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -62,6 +63,7 @@ export default function ProductEditScreen(props) {
       setPrice(product.price);
       setImage(product.image);
       setCategory(product.category || "T-Shirts");
+      setSizable(product.sizable || true);
       setCountInStock(product.countInStock);
       setDescription(product.description);
       setTaxPrice(product.taxPrice);
@@ -78,6 +80,7 @@ export default function ProductEditScreen(props) {
         price,
         image,
         category,
+        sizable,
         countInStock,
         description,
         taxPrice,
@@ -110,6 +113,15 @@ export default function ProductEditScreen(props) {
     setPrice(val);
     setTaxPrice((0.23 * val).toFixed(2));
     setFinalPrice((parseFloat(val) + parseFloat(0.23 * val)).toFixed(2));
+  };
+
+  const setCategoryAndSizable = (e) => {
+    setCategory(e.target.value);
+    if (e.target.value === "T-Shirts" || e.target.value === "Hoodies") {
+      setSizable(true);
+    } else {
+      setSizable(false);
+    }
   };
 
   return (
@@ -172,7 +184,7 @@ export default function ProductEditScreen(props) {
               <label htmlFor="category">Category</label>
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => setCategoryAndSizable(e)}
               >
                 <optgroup label="Clothing">
                   {clothingOptions.map((option) => (
