@@ -7,7 +7,16 @@ const productSchema = new mongoose.Schema(
     category: { type: String },
     description: { type: String },
     price: { type: Number },
-    countInStock: { type: Number },
+    countInStock: {
+      type: Number || {
+        xs: Number,
+        s: Number,
+        m: Number,
+        l: Number,
+        xl: Number,
+        xxl: Number,
+      },
+    },
     taxPrice: { type: Number },
     finalPrice: { type: Number },
   },

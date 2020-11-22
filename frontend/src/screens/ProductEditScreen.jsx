@@ -37,10 +37,11 @@ export default function ProductEditScreen(props) {
   const [taxPrice, setTaxPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
+  const clothingOptions = ["T-Shirts", "Hoodies", "Lenços", "Bags"];
+
   const categoryOptions = [
-    "Clothing",
     "Carteiras",
-    "Diskette",
+    "Diskettes",
     "Pinturas",
     "Prints",
     "Tapetes",
@@ -60,7 +61,7 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
-      setCategory(product.category || "Clothing");
+      setCategory(product.category || "T-Shirts");
       setCountInStock(product.countInStock);
       setDescription(product.description);
       setTaxPrice(product.taxPrice);
@@ -173,6 +174,13 @@ export default function ProductEditScreen(props) {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
+                <optgroup label="Clothing">
+                  {clothingOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </optgroup>
                 {categoryOptions.map((option) => (
                   <option key={option} value={option}>
                     {option}
@@ -180,16 +188,69 @@ export default function ProductEditScreen(props) {
                 ))}
               </select>
             </div>
-            <div>
-              <label htmlFor="countInStock">Count In Stock</label>
-              <input
-                type="number"
-                id="countInStock"
-                placeholder="Enter count in stock"
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              />
-            </div>
+            {category === "T-Shirts" || category === "Hoodies" ? (
+              <div>
+                <label>Count In Stock</label>
+                <input
+                  type="number"
+                  id="countInStockXS"
+                  placeholder="XS"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+                <br />
+                <input
+                  type="number"
+                  id="countInStockS"
+                  placeholder="S"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+                <br />
+                <input
+                  type="number"
+                  id="countInStockM"
+                  placeholder="M"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+                <br />
+                <input
+                  type="number"
+                  id="countInStockL"
+                  placeholder="L"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+                <br />
+                <input
+                  type="number"
+                  id="countInStockXL"
+                  placeholder="XL"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+                <br />
+                <input
+                  type="number"
+                  id="countInStockXXL"
+                  placeholder="XXL"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+              </div>
+            ) : (
+              <div>
+                <label htmlFor="countInStock">Count In Stock</label>
+                <input
+                  type="number"
+                  id="countInStock"
+                  placeholder="Enter count in stock"
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                />
+              </div>
+            )}
             <div>
               <label htmlFor="description">Description</label>
               <textarea
