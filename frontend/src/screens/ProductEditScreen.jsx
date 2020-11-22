@@ -30,7 +30,7 @@ export default function ProductEditScreen(props) {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
-  const [sizable, setSizable] = useState("");
+  const [isClothing, setIsClothing] = useState("");
   const [countInStock, setCountInStock] = useState("");
   const [countInStockXS, setCountInStockXS] = useState("");
   const [countInStockS, setCountInStockS] = useState("");
@@ -44,15 +44,16 @@ export default function ProductEditScreen(props) {
   const [taxPrice, setTaxPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
-  const clothingOptions = ["T-Shirts", "Hoodies", "Lenços", "Bags"];
+  const artworkOptions = ["Prints", "Pinturas", "Tapetes"];
 
-  const categoryOptions = [
+  const clothingOptions = ["T-Shirts", "Hoodies"];
+
+  const accessoriesOptions = [
     "Carteiras",
     "Diskettes",
-    "Pinturas",
-    "Prints",
-    "Tapetes",
     "Jóias",
+    "Bags",
+    "Lenços",
   ];
 
   useEffect(() => {
@@ -68,12 +69,12 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
-      setCategory(product.category || "T-Shirts");
+      setCategory(product.category || "Prints");
       if (product.category === "T-Shirts" || product.category === "Hoodies") {
-        setSizable(true);
+        setIsClothing(true);
         setCountInStock("");
       } else {
-        setSizable(false);
+        setIsClothing(false);
         setCountInStockXS("");
         setCountInStockS("");
         setCountInStockM("");
@@ -105,7 +106,7 @@ export default function ProductEditScreen(props) {
         price,
         image,
         category,
-        sizable,
+        isClothing,
         countInStock: {
           stock: countInStock,
           xs: countInStockXS,
@@ -148,13 +149,13 @@ export default function ProductEditScreen(props) {
     setFinalPrice((parseFloat(val) + parseFloat(0.23 * val)).toFixed(2));
   };
 
-  const setCategoryAndSizable = (e) => {
+  const setCategoryAndClothing = (e) => {
     setCategory(e.target.value);
     if (e.target.value === "T-Shirts" || e.target.value === "Hoodies") {
-      setSizable(true);
+      setIsClothing(true);
       setCountInStock("");
     } else {
-      setSizable(false);
+      setIsClothing(false);
       setCountInStockXS("");
       setCountInStockS("");
       setCountInStockM("");
@@ -224,8 +225,15 @@ export default function ProductEditScreen(props) {
               <label htmlFor="category">Category</label>
               <select
                 value={category}
-                onChange={(e) => setCategoryAndSizable(e)}
+                onChange={(e) => setCategoryAndClothing(e)}
               >
+                <optgroup label="Artwork">
+                  {artworkOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </optgroup>
                 <optgroup label="Clothing">
                   {clothingOptions.map((option) => (
                     <option key={option} value={option}>
@@ -233,11 +241,13 @@ export default function ProductEditScreen(props) {
                     </option>
                   ))}
                 </optgroup>
-                {categoryOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
+                <optgroup label="Accessories">
+                  {accessoriesOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </optgroup>
               </select>
             </div>
             {category === "T-Shirts" || category === "Hoodies" ? (

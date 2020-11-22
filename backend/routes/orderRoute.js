@@ -132,7 +132,7 @@ orderRouter.put(
         const product = await Product.findOne({
           name: item.name,
         });
-        if (!product.sizable) {
+        if (!product.isClothing) {
           product.countInStock.stock = product.countInStock.stock - item.qty;
         }
         // eslint-disable-next-line no-unused-vars
@@ -158,7 +158,7 @@ orderRouter.put(
           const product = await Product.findOne({
             name: item.name,
           });
-          if (!product.sizable) {
+          if (!product.isClothing) {
             product.countInStock.stock = product.countInStock.stock + item.qty;
           }
           // eslint-disable-next-line no-unused-vars

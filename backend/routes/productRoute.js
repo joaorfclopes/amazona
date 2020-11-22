@@ -56,7 +56,7 @@ productRouter.put(
       product.price = req.body.price;
       product.image = req.body.image;
       product.category = req.body.category;
-      product.sizable = req.body.sizable;
+      product.isClothing = req.body.isClothing;
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
       product.taxPrice = req.body.taxPrice;

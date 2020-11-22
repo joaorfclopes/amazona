@@ -60,7 +60,7 @@ export default function CartScreen(props) {
                     >
                       {[
                         ...Array(
-                          !item.sizable && item.countInStock.stock >= 5
+                          !item.isClothing && item.countInStock.stock >= 5
                             ? 5
                             : item.countInStock.stock
                         ).keys(),
