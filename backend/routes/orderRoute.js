@@ -132,7 +132,9 @@ orderRouter.put(
         const product = await Product.findOne({
           name: item.name,
         });
-        product.countInStock = product.countInStock - item.qty;
+        if (!product.sizable) {
+          product.countInStock.stock = product.countInStock.stock - item.qty;
+        }
         // eslint-disable-next-line no-unused-vars
         const updatedProduct = await product.save();
       });
@@ -156,7 +158,9 @@ orderRouter.put(
           const product = await Product.findOne({
             name: item.name,
           });
-          product.countInStock = product.countInStock + item.qty;
+          if (!product.sizable) {
+            product.countInStock.stock = product.countInStock.stock + item.qty;
+          }
           // eslint-disable-next-line no-unused-vars
           const updatedProduct = await product.save();
         });

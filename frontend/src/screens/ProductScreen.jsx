@@ -64,7 +64,7 @@ export default function ProductScreen(props) {
                   <div className="row">
                     <div>Status</div>
                     <div>
-                      {product.countInStock > 0 ? (
+                      {!product.sizable && product.countInStock.stock > 0 ? (
                         <span className="success">In Stock</span>
                       ) : (
                         <span className="danger">Unavailable</span>
@@ -72,7 +72,7 @@ export default function ProductScreen(props) {
                     </div>
                   </div>
                 </li>
-                {product.countInStock > 0 && (
+                {!product.sizable && product.countInStock.stock > 0 && (
                   <>
                     <li>
                       <div className="row">
@@ -84,9 +84,9 @@ export default function ProductScreen(props) {
                           >
                             {[
                               ...Array(
-                                product.countInStock >= 5
+                                product.countInStock.stock >= 5
                                   ? 5
-                                  : product.countInStock
+                                  : product.countInStock.stock
                               ).keys(),
                             ].map((x) => (
                               <option key={x + 1} value={x + 1}>

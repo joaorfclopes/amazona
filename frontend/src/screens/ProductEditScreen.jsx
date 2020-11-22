@@ -30,8 +30,14 @@ export default function ProductEditScreen(props) {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
-  const [sizable, setSizable] = useState(true);
+  const [sizable, setSizable] = useState("");
   const [countInStock, setCountInStock] = useState("");
+  const [countInStockXS, setCountInStockXS] = useState("");
+  const [countInStockS, setCountInStockS] = useState("");
+  const [countInStockM, setCountInStockM] = useState("");
+  const [countInStockL, setCountInStockL] = useState("");
+  const [countInStockXL, setCountInStockXL] = useState("");
+  const [countInStockXXL, setCountInStockXXL] = useState("");
   const [description, setDescription] = useState("");
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState("");
@@ -63,8 +69,20 @@ export default function ProductEditScreen(props) {
       setPrice(product.price);
       setImage(product.image);
       setCategory(product.category || "T-Shirts");
-      setSizable(product.sizable || true);
-      setCountInStock(product.countInStock);
+      if (product.category === "T-Shirts" || product.category === "Hoodies") {
+        setSizable(true);
+      } else {
+        setSizable(false);
+      }
+      if (product.countInStock) {
+        setCountInStock(product.countInStock.stock);
+        setCountInStockXS(product.countInStock.xs);
+        setCountInStockS(product.countInStock.s);
+        setCountInStockM(product.countInStock.m);
+        setCountInStockL(product.countInStock.l);
+        setCountInStockXL(product.countInStock.xl);
+        setCountInStockXXL(product.countInStock.xxl);
+      }
       setDescription(product.description);
       setTaxPrice(product.taxPrice);
       setFinalPrice(product.finalPrice);
@@ -81,7 +99,15 @@ export default function ProductEditScreen(props) {
         image,
         category,
         sizable,
-        countInStock,
+        countInStock: {
+          stock: countInStock,
+          xs: countInStockXS,
+          s: countInStockS,
+          m: countInStockM,
+          l: countInStockL,
+          xl: countInStockXL,
+          xxl: countInStockXXL,
+        },
         description,
         taxPrice,
         finalPrice,
@@ -203,17 +229,53 @@ export default function ProductEditScreen(props) {
             {category === "T-Shirts" || category === "Hoodies" ? (
               <div>
                 <label>Count In Stock</label>
-                <input type="number" id="countInStockXS" placeholder="XS" />
+                <input
+                  type="number"
+                  id="countInStockXS"
+                  placeholder="XS"
+                  value={countInStockXS}
+                  onChange={(e) => setCountInStockXS(e.target.value)}
+                />
                 <br />
-                <input type="number" id="countInStockS" placeholder="S" />
+                <input
+                  type="number"
+                  id="countInStockS"
+                  placeholder="S"
+                  value={countInStockS}
+                  onChange={(e) => setCountInStockS(e.target.value)}
+                />
                 <br />
-                <input type="number" id="countInStockM" placeholder="M" />
+                <input
+                  type="number"
+                  id="countInStockM"
+                  placeholder="M"
+                  value={countInStockM}
+                  onChange={(e) => setCountInStockM(e.target.value)}
+                />
                 <br />
-                <input type="number" id="countInStockL" placeholder="L" />
+                <input
+                  type="number"
+                  id="countInStockL"
+                  placeholder="L"
+                  value={countInStockL}
+                  onChange={(e) => setCountInStockL(e.target.value)}
+                />
                 <br />
-                <input type="number" id="countInStockXL" placeholder="XL" />
+                <input
+                  type="number"
+                  id="countInStockXL"
+                  placeholder="XL"
+                  value={countInStockXL}
+                  onChange={(e) => setCountInStockXL(e.target.value)}
+                />
                 <br />
-                <input type="number" id="countInStockXXL" placeholder="XXL" />
+                <input
+                  type="number"
+                  id="countInStockXXL"
+                  placeholder="XXL"
+                  value={countInStockXXL}
+                  onChange={(e) => setCountInStockXXL(e.target.value)}
+                />
               </div>
             ) : (
               <div>
