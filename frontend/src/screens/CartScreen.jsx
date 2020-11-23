@@ -28,14 +28,24 @@ export default function CartScreen(props) {
     props.history.push("/signin?redirect=shipping");
   };
 
-  const setSizeAddCart = (id, itemQty, e) => {
+  const setSizeAddCart = (id, e) => {
     setSize(String(e.target.value));
-    dispatch(addToCart(id, itemQty, String(e.target.value)));
+    dispatch(addToCart(id, 1, String(e.target.value)));
   };
 
   const setQtyAddCart = (id, e, itemSize) => {
     setQty(Number(e.target.value));
     dispatch(addToCart(id, Number(e.target.value), itemSize));
+  };
+
+  const sizeArray = (size, val) => {
+    return (
+      val > 0 && (
+        <option key={size} value={size}>
+          {size}
+        </option>
+      )
+    );
   };
 
   const qtyArray = (val) => {
@@ -73,15 +83,21 @@ export default function CartScreen(props) {
                     <div>
                       <select
                         value={item.size}
-                        onChange={(e) =>
-                          setSizeAddCart(item.product, item.qty, e)
-                        }
+                        onChange={(e) => setSizeAddCart(item.product, e)}
                       >
-                        {sizes.map((x) => (
-                          <option key={x} value={x}>
-                            {x}
-                          </option>
-                        ))}
+                        {sizes.map((x) =>
+                          x === "XS"
+                            ? sizeArray(x, item.countInStock.xs)
+                            : x === "S"
+                            ? sizeArray(x, item.countInStock.s)
+                            : x === "M"
+                            ? sizeArray(x, item.countInStock.m)
+                            : x === "L"
+                            ? sizeArray(x, item.countInStock.l)
+                            : x === "XL"
+                            ? sizeArray(x, item.countInStock.xl)
+                            : x === "XXL" && sizeArray(x, item.countInStock.xxl)
+                        )}
                       </select>
                     </div>
                   )}
