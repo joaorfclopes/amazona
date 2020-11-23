@@ -9,7 +9,7 @@ export default function CartScreen(props) {
   const productId = props.match.params.id;
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const [qty, setQty] = useState(Number(urlParams.get("qty")));
+  const [qty, setQty] = useState(Number(urlParams.get("qty")) || 1);
   const [size, setSize] = useState(String(urlParams.get("size")));
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -22,22 +22,30 @@ export default function CartScreen(props) {
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
-    props.history.push("/cart");
   };
 
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");
   };
 
-  const setSizeAddCart = (id, e) => {
+  const setSizeAddCart = (id, itemQty, e) => {
     setSize(String(e.target.value));
-    dispatch(addToCart(id, qty, String(e.target.value)));
+    dispatch(addToCart(id, itemQty, String(e.target.value)));
   };
 
-  const setQtyAddCart = (id, e) => {
+  const setQtyAddCart = (id, e, itemSize) => {
     setQty(Number(e.target.value));
-    dispatch(addToCart(id, Number(e.target.value), size));
+    dispatch(addToCart(id, Number(e.target.value), itemSize));
   };
+
+  const qtyArray = (val) => {
+    return [...Array(val >= 5 ? 5 : val).keys()].map((x) => (
+      <option key={x + 1} value={x + 1}>
+        {x + 1}
+      </option>
+    ));
+  };
+
   return (
     <div className="row top">
       <div className="col-2">
@@ -65,7 +73,9 @@ export default function CartScreen(props) {
                     <div>
                       <select
                         value={item.size}
-                        onChange={(e) => setSizeAddCart(item.product, e)}
+                        onChange={(e) =>
+                          setSizeAddCart(item.product, item.qty, e)
+                        }
                       >
                         {sizes.map((x) => (
                           <option key={x} value={x}>
@@ -78,21 +88,24 @@ export default function CartScreen(props) {
                   <div>
                     <select
                       value={item.qty}
-                      onChange={(e) => setQtyAddCart(item.product, e)}
+                      onChange={(e) =>
+                        setQtyAddCart(item.product, e, item.size)
+                      }
                     >
-                      {[
-                        ...Array(
-                          !item.isClothing
-                            ? item.countInStock.stock >= 5
-                              ? 5
-                              : item.countInStock.stock
-                            : 5
-                        ).keys(),
-                      ].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
+                      {!item.isClothing
+                        ? qtyArray(item.countInStock.stock)
+                        : item.size === "XS"
+                        ? qtyArray(item.countInStock.xs)
+                        : item.size === "S"
+                        ? qtyArray(item.countInStock.s)
+                        : item.size === "M"
+                        ? qtyArray(item.countInStock.m)
+                        : item.size === "L"
+                        ? qtyArray(item.countInStock.l)
+                        : item.size === "XL"
+                        ? qtyArray(item.countInStock.xl)
+                        : item.size === "XXL" &&
+                          qtyArray(item.countInStock.xxl)}
                     </select>
                   </div>
                   <div>

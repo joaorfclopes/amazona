@@ -17,12 +17,13 @@ export default function ProductScreen(props) {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
 
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     if (!product.isClothing) {
-      props.history.push(`/cart/${productId}?qty=${qty}`);
+      await props.history.push(`/cart/${productId}?qty=${qty}`);
     } else {
-      props.history.push(`/cart/${productId}?size=${size}&qty=${qty}`);
+      await props.history.push(`/cart/${productId}?qty=${qty}&size=${size}`);
     }
+    props.history.push(`/cart`);
   };
 
   const availability = (val) => {
