@@ -134,6 +134,19 @@ orderRouter.put(
         });
         if (!product.isClothing) {
           product.countInStock.stock = product.countInStock.stock - item.qty;
+        } else {
+          item.size === "XS"
+            ? (product.countInStock.xs = product.countInStock.xs - item.qty)
+            : item.size === "S"
+            ? (product.countInStock.s = product.countInStock.s - item.qty)
+            : item.size === "M"
+            ? (product.countInStock.m = product.countInStock.m - item.qty)
+            : item.size === "L"
+            ? (product.countInStock.l = product.countInStock.l - item.qty)
+            : item.size === "XL"
+            ? (product.countInStock.xl = product.countInStock.xl - item.qty)
+            : item.size === "XXL" &&
+              (product.countInStock.xxl = product.countInStock.xxl - item.qty);
         }
         // eslint-disable-next-line no-unused-vars
         const updatedProduct = await product.save();
@@ -160,6 +173,20 @@ orderRouter.put(
           });
           if (!product.isClothing) {
             product.countInStock.stock = product.countInStock.stock + item.qty;
+          } else {
+            item.size === "XS"
+              ? (product.countInStock.xs = product.countInStock.xs + item.qty)
+              : item.size === "S"
+              ? (product.countInStock.s = product.countInStock.s + item.qty)
+              : item.size === "M"
+              ? (product.countInStock.m = product.countInStock.m + item.qty)
+              : item.size === "L"
+              ? (product.countInStock.l = product.countInStock.l + item.qty)
+              : item.size === "XL"
+              ? (product.countInStock.xl = product.countInStock.xl + item.qty)
+              : item.size === "XXL" &&
+                (product.countInStock.xxl =
+                  product.countInStock.xxl + item.qty);
           }
           // eslint-disable-next-line no-unused-vars
           const updatedProduct = await product.save();
