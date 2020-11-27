@@ -1,0 +1,10 @@
+Extras:
+Sort by Category
+Product Gallery
+Tables ordenation
+Tables pagination
+
+Delete account
+Loading
+Translate
+Service Account to mailing 
