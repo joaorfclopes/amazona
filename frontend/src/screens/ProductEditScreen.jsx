@@ -218,8 +218,9 @@ export default function ProductEditScreen(props) {
                 onChange={uploadFileHandler}
               />
               {loadingUpload && <LoadingBox />}
-              {errorUpload &&
-                !image(<MessageBox variant="danger">{errorUpload}</MessageBox>)}
+              {errorUpload && !image && (
+                <MessageBox variant="danger">{errorUpload}</MessageBox>
+              )}
             </div>
             <div>
               <label htmlFor="category">Category</label>
