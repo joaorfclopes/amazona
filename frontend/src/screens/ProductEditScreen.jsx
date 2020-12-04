@@ -101,31 +101,34 @@ export default function ProductEditScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      updateProduct({
-        _id: productId,
-        name,
-        price,
-        images,
-        category,
-        isClothing,
-        countInStock: {
-          stock: countInStock,
-          xs: countInStockXS,
-          s: countInStockS,
-          m: countInStockM,
-          l: countInStockL,
-          xl: countInStockXL,
-          xxl: countInStockXXL,
-        },
-        description,
-        taxPrice,
-        finalPrice,
-      })
-    );
+    if (!loadingUpload) {
+      dispatch(
+        updateProduct({
+          _id: productId,
+          name,
+          price,
+          images,
+          category,
+          isClothing,
+          countInStock: {
+            stock: countInStock,
+            xs: countInStockXS,
+            s: countInStockS,
+            m: countInStockM,
+            l: countInStockL,
+            xl: countInStockXL,
+            xxl: countInStockXXL,
+          },
+          description,
+          taxPrice,
+          finalPrice,
+        })
+      );
+    }
   };
 
   const uploadFileHandler = async (e) => {
+    setLoadingUpload(true);
     const files = fileInput.current.files;
     const imagesArray = [];
     try {
