@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   detailsProduct,
@@ -28,7 +28,7 @@ export default function ProductEditScreen(props) {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [category, setCategory] = useState("");
   const [isClothing, setIsClothing] = useState("");
   const [countInStock, setCountInStock] = useState("");
@@ -43,6 +43,8 @@ export default function ProductEditScreen(props) {
   const [errorUpload, setErrorUpload] = useState("");
   const [taxPrice, setTaxPrice] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
+
+  const fileInput = useRef();
 
   const artworkOptions = ["Prints", "Pinturas", "Tapetes"];
 
@@ -68,7 +70,7 @@ export default function ProductEditScreen(props) {
     } else {
       setName(product.name);
       setPrice(product.price);
-      setImage(product.image);
+      setImages(product.images);
       setCategory(product.category || "Prints");
       if (product.category === "T-Shirts" || product.category === "Hoodies") {
         setIsClothing(true);
@@ -104,7 +106,7 @@ export default function ProductEditScreen(props) {
         _id: productId,
         name,
         price,
-        image,
+        images,
         category,
         isClothing,
         countInStock: {
@@ -124,18 +126,22 @@ export default function ProductEditScreen(props) {
   };
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const bodyFormData = new FormData();
-    bodyFormData.append("image", file);
-    setLoadingUpload(true);
+    const files = fileInput.current.files;
+    const imagesArray = [];
     try {
-      const { data } = await Axios.post("/api/uploads/s3", bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      });
-      setImage(data);
+      for (let i = 0; i < files.length; i++) {
+        const file = e.target.files[i];
+        const bodyFormData = new FormData();
+        bodyFormData.append("image", file);
+        const { data } = await Axios.post("/api/uploads/s3", bodyFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        });
+        imagesArray.push(data);
+      }
+      setImages(imagesArray);
       setLoadingUpload(false);
     } catch (error) {
       setErrorUpload(error.message);
@@ -208,17 +214,20 @@ export default function ProductEditScreen(props) {
             </div>
             <div>
               <label htmlFor="imageFile">Image File</label>
-              {image && (
-                <img className="preview" src={image} alt="imagePreview" />
-              )}
+              {images &&
+                images.map((image) => (
+                  <img className="preview" src={image} alt="imagePreview" />
+                ))}
               <input
+                ref={fileInput}
                 type="file"
                 id="imageFile"
                 label="Choose image"
                 onChange={uploadFileHandler}
+                multiple
               />
               {loadingUpload && <LoadingBox />}
-              {errorUpload && !image && (
+              {errorUpload && !images && (
                 <MessageBox variant="danger">{errorUpload}</MessageBox>
               )}
             </div>

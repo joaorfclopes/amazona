@@ -71,7 +71,15 @@ export default function ProductScreen(props) {
       ) : (
         <div className="row top">
           <div className="col-2">
-            <img className="large" src={product.image} alt={product.name} />
+            {product.images &&
+              product.images.map((image) => (
+                <img
+                  key={image}
+                  className="large"
+                  src={image}
+                  alt={product.name}
+                />
+              ))}
           </div>
           <div className="col-1">
             <ul>

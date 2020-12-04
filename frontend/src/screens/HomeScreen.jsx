@@ -24,8 +24,7 @@ export default function HomeScreen() {
           <div className="row center">
             {products.map(
               (product) =>
-                product.image &&
-                product.image &&
+                product.images[0] &&
                 product.finalPrice && (
                   <Product key={product._id} product={product} />
                 )
